@@ -52,6 +52,14 @@ public abstract class TileIC2Energy extends TileRedstoneFlux implements IEnergyS
     }
 
     @Override
+    public void update() {
+        super.update();
+        if (!IC2Connected) {
+            MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
+            IC2Connected = true;
+        }
+    }
+    @Override
     @Optional.Method(modid = "ic2")
     public double getDemandedEnergy() {
         return Integer.MAX_VALUE;
