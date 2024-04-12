@@ -20,6 +20,10 @@ public interface IFluxNetwork {
         return getSetting(NetworkSettings.NETWORK_NAME);
     }
 
+    default boolean playerIsOwner(EntityPlayer player) {
+        return getSetting(NetworkSettings.NETWORK_OWNER).equals(EntityPlayer.getUUID(player.getGameProfile()));
+    }
+
     <T> T getSetting(NetworkSettings<T> setting);
 
     <T> void setSetting(NetworkSettings<T> settings, T value);

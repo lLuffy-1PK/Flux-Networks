@@ -16,7 +16,7 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
 
     public List<T> elements = Lists.newArrayList();
     protected List<T> current = Lists.newArrayList();
-    protected SortType sortType = SortType.ID;
+    protected SortType sortType = SortType.MY_FIRST;
     protected PageLabelButton labelButton;
     private boolean init;
 
@@ -171,6 +171,7 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
     }
 
     public enum SortType {
+        MY_FIRST(FluxTranslate.SORTING_MY_FIRST),
         ID(FluxTranslate.SORTING_ID),
         NAME(FluxTranslate.SORTING_NAME);
 

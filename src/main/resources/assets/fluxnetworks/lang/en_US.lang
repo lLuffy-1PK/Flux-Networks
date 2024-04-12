@@ -98,6 +98,7 @@ info.fluxnetworks.gui.cancelmembership=Cancel Membership
 info.fluxnetworks.gui.you=Youself
 
 info.fluxnetworks.gui.sort.smart=Smart
+info.fluxnetworks.gui.sort.myfirst=My First
 info.fluxnetworks.gui.sort.id=ID
 info.fluxnetworks.gui.sort.name=Name
 

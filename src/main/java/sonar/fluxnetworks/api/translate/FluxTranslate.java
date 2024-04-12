@@ -77,6 +77,7 @@ public class FluxTranslate implements ITranslationProvider {
     public static final Translation YOU = i("gui.you");
 
     public static final Translation SORTING_SMART = i("gui.sort.smart");
+    public static final Translation SORTING_MY_FIRST = i("gui.sort.myfirst");
     public static final Translation SORTING_ID = i("gui.sort.id");
     public static final Translation SORTING_NAME = i("gui.sort.name");
 

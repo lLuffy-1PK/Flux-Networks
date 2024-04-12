@@ -155,6 +155,10 @@ public class GuiTabSelection extends GuiTabPages<IFluxNetwork> {
     @Override
     protected void sortGrids(SortType sortType) {
         switch (sortType) {
+            case MY_FIRST:
+                elements.sort((network1, network2) -> Boolean.compare(network2.playerIsOwner(player), network1.playerIsOwner(player)));
+                refreshCurrentPageInternal();
+                break;
             case ID:
                 elements.sort(Comparator.comparing(IFluxNetwork::getNetworkID));
                 refreshCurrentPageInternal();
