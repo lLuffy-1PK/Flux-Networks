@@ -47,7 +47,7 @@ public abstract class BlockSidedConnection extends BlockFluxCore {
     public void observedNeighborChange(IBlockState observerState, World world, BlockPos observerPos, Block changedBlock, BlockPos changedBlockPos) {
         super.observedNeighborChange(observerState, world, observerPos, changedBlock, changedBlockPos);
         TileFluxConnector tile = (TileFluxConnector) world.getTileEntity(observerPos);
-        if(!tile.getWorld().isRemote) {
+        if (!tile.getWorld().isRemote) {
             tile.updateTransfers(FluxUtils.getBlockDirection(observerPos, changedBlockPos));
         }
     }
@@ -56,8 +56,14 @@ public abstract class BlockSidedConnection extends BlockFluxCore {
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         state = super.getActualState(state, worldIn, pos);
         TileFluxCore tile = (TileFluxCore) worldIn.getTileEntity(pos);
-        for(PropertyBoolFacing face : faces) {
-            state = state.withProperty(face, tile.connections[face.facing.getIndex()] == 1);
+        if (tile != null) {
+            for (PropertyBoolFacing face : faces) {
+                state = state.withProperty(face, tile.connections[face.facing.getIndex()] == 1);
+            }
+        } else {
+            for (PropertyBoolFacing face : faces) {
+                state = state.withProperty(face, false);
+            }
         }
         return state;
     }

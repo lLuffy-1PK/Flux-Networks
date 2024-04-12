@@ -56,7 +56,7 @@ public abstract class BlockFluxCore extends BlockCore {
 
         if (tileEntity instanceof TileFluxCore) {
             TileFluxCore fluxCore = (TileFluxCore) tileEntity;
-            if(fluxCore.playerUsing.size() > 0) {
+            if(!fluxCore.playerUsing.isEmpty()) {
                 TextComponentTranslation textComponents = new TextComponentTranslation(FluxTranslate.ACCESS_OCCUPY_KEY);
                 textComponents.getStyle().setBold(true);
                 textComponents.getStyle().setColor(TextFormatting.DARK_RED);
@@ -132,7 +132,11 @@ public abstract class BlockFluxCore extends BlockCore {
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         TileFluxCore tile = (TileFluxCore) worldIn.getTileEntity(pos);
-        state = state.withProperty(CONNECTED, tile.connected);
+        if (tile != null) {
+            state = state.withProperty(CONNECTED, tile.connected);
+        } else {
+            state = state.withProperty(CONNECTED, false);
+        }
         return state;
     }
 
