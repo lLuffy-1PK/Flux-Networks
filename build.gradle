@@ -8,7 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -43,6 +43,7 @@ sourceSets {
 
 minecraft {
     mappings channel: 'stable', version: '39-1.12'
+    accessTransformer = file('src/main/resources/META-INF/top_at.cfg')
 
     runs {
         client {
@@ -79,7 +80,7 @@ repositories {
     }
     maven {
         // Open Computers
-        url "http://maven.cil.li/"
+        url "https://maven.cil.li/"
     }
     maven {
         // location of a maven that hosts all files on CurseForge
@@ -91,20 +92,21 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei_${minecraft_version}:${jei_version}:api")
+    implementation fg.deobf("mezz.jei:jei_${minecraft_version}:${jei_version}:api")
 
-    compile fg.deobf("mcjty.theoneprobe:TheOneProbe-1.12:${top_version}")
+    implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.12:${top_version}")
 
-    compileOnly fg.deobf("li.cil.oc:OpenComputers:MC${minecraft_version}-1.7.5.213:api")
+    implementation fg.deobf("li.cil.oc:OpenComputers:MC${minecraft_version}-1.7.5.213:api")
 
-    compile fg.deobf("curse.maven:baubles-227083:2518667")
-    compileOnly fg.deobf("curse.maven:gregtechce-293327:3167656")
-    compileOnly fg.deobf("curse.maven:industrial-craft-242638:2746894")
-    compileOnly fg.deobf("curse.maven:mekanism-268560:2835176")
-    compileOnly fg.deobf("curse.maven:redstone-flux-270789:2920436")
+    implementation fg.deobf("curse.maven:baubles-227083:2518667")
+    implementation fg.deobf("curse.maven:gregtechce-293327:3167656")
+    implementation fg.deobf("curse.maven:industrial-craft-242638:2746894")
+    implementation fg.deobf("curse.maven:mekanism-268560:2835176")
+    implementation fg.deobf("curse.maven:redstone-flux-270789:2920436")
 }
 
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     inputs.property "version", mod_version
     inputs.property "mcversion", minecraft_version
 
@@ -120,6 +122,7 @@ processResources {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes([
                 "Specification-Title"     : "Flux-Networks",
