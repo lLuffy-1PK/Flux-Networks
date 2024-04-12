@@ -1,11 +1,11 @@
 package sonar.fluxnetworks;
 
-import sonar.fluxnetworks.common.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sonar.fluxnetworks.common.CommonProxy;
 
 @Mod(modid = FluxNetworks.MODID, name = FluxNetworks.NAME, version = FluxNetworks.VERSION, dependencies = "required-after:forge@[14.23.4.2854,)", acceptedMinecraftVersions = "[1.12.2]", guiFactory = "sonar.fluxnetworks.common.core.ConfigGuiFactory")
 public class FluxNetworks {

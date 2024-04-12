@@ -1,16 +1,6 @@
 package sonar.fluxnetworks.client;
 
 import com.google.common.collect.Lists;
-import sonar.fluxnetworks.api.utils.FluxConfigurationType;
-import sonar.fluxnetworks.client.gui.basic.GuiFluxCore;
-import sonar.fluxnetworks.common.block.BlockFluxCore;
-import sonar.fluxnetworks.common.data.FluxNetworkData;
-import sonar.fluxnetworks.api.network.NetworkSettings;
-import sonar.fluxnetworks.common.handler.PacketHandler;
-import sonar.fluxnetworks.common.item.ItemConfigurator;
-import sonar.fluxnetworks.common.network.PacketColorRequest;
-import sonar.fluxnetworks.common.tileentity.TileFluxCore;
-import sonar.fluxnetworks.common.core.FluxUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -22,6 +12,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import sonar.fluxnetworks.api.network.NetworkSettings;
+import sonar.fluxnetworks.api.utils.FluxConfigurationType;
+import sonar.fluxnetworks.client.gui.basic.GuiFluxCore;
+import sonar.fluxnetworks.common.block.BlockFluxCore;
+import sonar.fluxnetworks.common.core.FluxUtils;
+import sonar.fluxnetworks.common.data.FluxNetworkData;
+import sonar.fluxnetworks.common.handler.PacketHandler;
+import sonar.fluxnetworks.common.item.ItemConfigurator;
+import sonar.fluxnetworks.common.network.PacketColorRequest;
+import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -40,8 +40,8 @@ public class FluxColorHandler implements IBlockColor, IItemColor {
     public static final int NO_NETWORK_COLOR = FluxUtils.getIntFromColor(178, 178, 178);
     public static final Map<Integer, Integer> colorCache = new HashMap<>();
     public static final Map<Integer, String> nameCache = new HashMap<>();
-    private static List<Integer> requests = new ArrayList<>();
-    private static List<Integer> sent_requests = new ArrayList<>();
+    private static final List<Integer> requests = new ArrayList<>();
+    private static final List<Integer> sent_requests = new ArrayList<>();
 
     public static void reset() {
         colorCache.clear();
@@ -50,29 +50,29 @@ public class FluxColorHandler implements IBlockColor, IItemColor {
     }
 
     public static void loadColorCache(int id, int color) {
-        if(id != -1) {
+        if (id != -1) {
             colorCache.put(id, color);
         }
     }
 
     public static void loadNameCache(int id, String name) {
-        if(id != -1) {
+        if (id != -1) {
             nameCache.put(id, name);
         }
     }
 
     public static void placeRequest(int id) {
-        if(id != -1 && !requests.contains(id) && !sent_requests.contains(id)){
+        if (id != -1 && !requests.contains(id) && !sent_requests.contains(id)) {
             requests.add(id);
         }
     }
 
     public static int getOrRequestNetworkColor(int id) {
-        if(id == -1){
+        if (id == -1) {
             return NO_NETWORK_COLOR;
         }
         Integer cached = colorCache.get(id);
-        if(cached != null){
+        if (cached != null) {
             return cached;
         }
         placeRequest(id);
@@ -80,11 +80,11 @@ public class FluxColorHandler implements IBlockColor, IItemColor {
     }
 
     public static String getOrRequestNetworkName(int id) {
-        if(id == -1){
+        if (id == -1) {
             return "NONE";
         }
         String cached = nameCache.get(id);
-        if(cached != null){
+        if (cached != null) {
             return cached;
         }
         placeRequest(id);
@@ -94,9 +94,9 @@ public class FluxColorHandler implements IBlockColor, IItemColor {
     public static int tickCount;
 
     public static void sendRequests() {
-        if(!requests.isEmpty()){
+        if (!requests.isEmpty()) {
             tickCount++;
-            if(tickCount > 40){
+            if (tickCount > 40) {
                 tickCount = 0;
                 PacketHandler.network.sendToServer(new PacketColorRequest.ColorRequestMessage(Lists.newArrayList(requests)));
                 sent_requests.addAll(requests);
@@ -106,7 +106,7 @@ public class FluxColorHandler implements IBlockColor, IItemColor {
     }
 
     public static void receiveCache(Map<Integer, Tuple<Integer, String>> cache) {
-        cache.forEach((ID,DETAILS) -> {
+        cache.forEach((ID, DETAILS) -> {
             loadColorCache(ID, DETAILS.getFirst());
             loadNameCache(ID, DETAILS.getSecond());
             sent_requests.remove(ID);
@@ -153,8 +153,8 @@ public class FluxColorHandler implements IBlockColor, IItemColor {
         if (tintIndex == 1) {
             Gui screen = Minecraft.getMinecraft().currentScreen;
             if (screen instanceof GuiFluxCore) {
-                GuiFluxCore guiFluxCore = (GuiFluxCore)screen;
-                if(guiFluxCore.connector instanceof ItemConfigurator.NetworkConnector){
+                GuiFluxCore guiFluxCore = (GuiFluxCore) screen;
+                if (guiFluxCore.connector instanceof ItemConfigurator.NetworkConnector) {
                     return guiFluxCore.network.getSetting(NetworkSettings.NETWORK_COLOR);
                 }
             }

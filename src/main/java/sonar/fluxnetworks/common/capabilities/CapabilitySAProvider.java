@@ -1,18 +1,18 @@
 package sonar.fluxnetworks.common.capabilities;
 
-import sonar.fluxnetworks.api.utils.Capabilities;
-import sonar.fluxnetworks.api.network.ISuperAdmin;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import sonar.fluxnetworks.api.network.ISuperAdmin;
+import sonar.fluxnetworks.api.utils.Capabilities;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CapabilitySAProvider implements ICapabilitySerializable {
 
-    private ISuperAdmin instance = Capabilities.SUPER_ADMIN.getDefaultInstance();
+    private final ISuperAdmin instance = Capabilities.SUPER_ADMIN.getDefaultInstance();
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {

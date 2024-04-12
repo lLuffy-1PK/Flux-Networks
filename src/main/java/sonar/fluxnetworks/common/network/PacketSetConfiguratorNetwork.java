@@ -1,12 +1,5 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.FluxNetworks;
-import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
-import sonar.fluxnetworks.api.utils.FluxConfigurationType;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.api.network.NetworkSettings;
-import sonar.fluxnetworks.common.item.ItemConfigurator;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,7 +8,14 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.FluxNetworks;
+import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.network.NetworkSettings;
+import sonar.fluxnetworks.api.utils.FluxConfigurationType;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 import sonar.fluxnetworks.common.core.FluxUtils;
+import sonar.fluxnetworks.common.item.ItemConfigurator;
 
 public class PacketSetConfiguratorNetwork implements IMessageHandler<PacketSetConfiguratorNetwork.SetConfiguratorNetworkMessage, IMessage> {
 
@@ -24,7 +24,7 @@ public class PacketSetConfiguratorNetwork implements IMessageHandler<PacketSetCo
         EntityPlayer player = FluxNetworks.proxy.getPlayer(ctx);
 
         IFluxNetwork network = FluxNetworkCache.instance.getNetwork(message.id);
-        if(!network.isInvalid()) {
+        if (!network.isInvalid()) {
             if (!network.getMemberPermission(player).canAccess()) {
                 if (message.password.isEmpty()) {
                     return new PacketFeedback.FeedbackMessage(EnumFeedbackInfo.PASSWORD_REQUIRE);
@@ -34,7 +34,7 @@ public class PacketSetConfiguratorNetwork implements IMessageHandler<PacketSetCo
                 }
             }
             ItemStack stack = player.getHeldItemMainhand();
-            if(stack.getItem() instanceof ItemConfigurator){
+            if (stack.getItem() instanceof ItemConfigurator) {
                 NBTTagCompound configs = stack.getOrCreateSubCompound(FluxUtils.CONFIGS_TAG);
                 configs.setInteger(FluxConfigurationType.NETWORK.getNBTName(), message.id);
             }
@@ -43,14 +43,15 @@ public class PacketSetConfiguratorNetwork implements IMessageHandler<PacketSetCo
         return null;
     }
 
-    public static class SetConfiguratorNetworkMessage implements IMessage{
+    public static class SetConfiguratorNetworkMessage implements IMessage {
 
         public int id;
         public String password;
 
-        public SetConfiguratorNetworkMessage(){}
+        public SetConfiguratorNetworkMessage() {
+        }
 
-        public SetConfiguratorNetworkMessage(int id, String password){
+        public SetConfiguratorNetworkMessage(int id, String password) {
             this.id = id;
             this.password = password;
         }

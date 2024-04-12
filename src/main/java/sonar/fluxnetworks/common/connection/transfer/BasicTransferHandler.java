@@ -1,12 +1,10 @@
 package sonar.fluxnetworks.common.connection.transfer;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
 import sonar.fluxnetworks.api.network.ITransferHandler;
 import sonar.fluxnetworks.api.tiles.IFluxConnector;
-import net.minecraft.nbt.NBTTagCompound;
 import sonar.fluxnetworks.api.utils.NBTType;
-import sonar.fluxnetworks.common.connection.FluxNetworkServer;
 
 import javax.annotation.Nonnull;
 

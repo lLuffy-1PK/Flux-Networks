@@ -1,9 +1,9 @@
 package sonar.fluxnetworks.common.item;
 
+import net.minecraft.item.Item;
 import sonar.fluxnetworks.FluxNetworks;
 import sonar.fluxnetworks.common.CommonProxy;
 import sonar.fluxnetworks.common.registry.RegistryItems;
-import net.minecraft.item.Item;
 
 public class ItemCore extends Item {
 

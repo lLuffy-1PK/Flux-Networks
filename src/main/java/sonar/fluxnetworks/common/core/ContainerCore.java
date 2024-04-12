@@ -1,8 +1,8 @@
 package sonar.fluxnetworks.common.core;
 
-import sonar.fluxnetworks.api.network.INetworkConnector;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import sonar.fluxnetworks.api.network.INetworkConnector;
 
 public class ContainerCore extends Container {
 

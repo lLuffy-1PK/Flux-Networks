@@ -20,7 +20,9 @@ public class FluxNetworkCache {
 
     public static FluxNetworkCache instance = new FluxNetworkCache();
 
-    /** Client Cache **/
+    /**
+     * Client Cache
+     **/
     public Map<Integer, IFluxNetwork> networks = new HashMap<>();
     public boolean superAdminClient = false;
 
@@ -34,7 +36,7 @@ public class FluxNetworkCache {
     }
 
     public boolean hasSpaceLeft(EntityPlayer player) {
-        if(FluxConfig.maximumPerPlayer == -1) {
+        if (FluxConfig.maximumPerPlayer == -1) {
             return true;
         }
         UUID uuid = EntityPlayer.getUUID(player.getGameProfile());
@@ -57,17 +59,19 @@ public class FluxNetworkCache {
         return FluxNetworkData.get().uniqueID++;
     }
 
-    /** Client Only **/
+    /**
+     * Client Only
+     **/
     public void updateClientFromPacket(Map<Integer, NBTTagCompound> serverSideNetworks, NBTType type) {
         serverSideNetworks.forEach((i, n) -> {
             IFluxNetwork network = networks.get(i);
-            if(type == NBTType.NETWORK_CLEAR) {
-                if(network != null) {
+            if (type == NBTType.NETWORK_CLEAR) {
+                if (network != null) {
                     networks.remove(i);
                     return;
                 }
             }
-            if(network == null) {
+            if (network == null) {
                 network = new FluxLiteNetwork();
                 network.readNetworkNBT(n, type);
                 networks.put(i, network);
@@ -79,7 +83,7 @@ public class FluxNetworkCache {
 
     public void updateClientConnections(int networkID, List<NBTTagCompound> tags) {
         IFluxNetwork network = networks.get(networkID);
-        if(network != null) {
+        if (network != null) {
             List<IFluxConnector> connectors = network.getSetting(NetworkSettings.ALL_CONNECTORS);
             tags.forEach(t -> {
                 Coord4D coord4D = new Coord4D(t);
@@ -88,22 +92,30 @@ public class FluxNetworkCache {
         }
     }
 
-    /** Server Only **/
+    /**
+     * Server Only
+     **/
     public IFluxNetwork getNetwork(int id) {
         return FluxNetworkData.get().networks.getOrDefault(id, FluxNetworkInvalid.instance);
     }
 
-    /** Server Only **/
+    /**
+     * Server Only
+     **/
     public Collection<IFluxNetwork> getAllNetworks() {
         return FluxNetworkData.get().networks.values();
     }
 
-    /** Client Only **/
+    /**
+     * Client Only
+     **/
     public IFluxNetwork getClientNetwork(int id) {
         return networks.getOrDefault(id, FluxNetworkInvalid.instance);
     }
 
-    /** Client Only **/
+    /**
+     * Client Only
+     **/
     public List<IFluxNetwork> getAllClientNetworks() {
         return new ArrayList<>(networks.values());
     }

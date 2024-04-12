@@ -1,10 +1,10 @@
 package sonar.fluxnetworks.common.core;
 
-import sonar.fluxnetworks.api.tiles.IFluxConnector;
-import sonar.fluxnetworks.api.tiles.IFluxPoint;
 import gregtech.api.capability.IEnergyContainer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.Optional;
+import sonar.fluxnetworks.api.tiles.IFluxConnector;
+import sonar.fluxnetworks.api.tiles.IFluxPoint;
 
 @Optional.InterfaceList({
         @Optional.Interface(iface = "gregtech.api.capability.IEnergyContainer", modid = "gregtech")

@@ -1,13 +1,13 @@
 package sonar.fluxnetworks.common.block;
 
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.common.tileentity.TileFluxPoint;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
+import sonar.fluxnetworks.common.tileentity.TileFluxPoint;
 
 import javax.annotation.Nullable;
 import java.util.List;

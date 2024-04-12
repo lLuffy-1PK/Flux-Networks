@@ -1,16 +1,16 @@
 package sonar.fluxnetworks.api.tiles;
 
-import sonar.fluxnetworks.api.network.ConnectionType;
-import sonar.fluxnetworks.api.utils.Coord4D;
-import sonar.fluxnetworks.api.network.INetworkConnector;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.api.network.ITransferHandler;
-import sonar.fluxnetworks.common.core.FluxGuiStack;
-import sonar.fluxnetworks.api.utils.NBTType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.api.network.ConnectionType;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.network.INetworkConnector;
+import sonar.fluxnetworks.api.network.ITransferHandler;
+import sonar.fluxnetworks.api.utils.Coord4D;
+import sonar.fluxnetworks.api.utils.NBTType;
+import sonar.fluxnetworks.common.core.FluxGuiStack;
 
 import java.util.UUID;
 
@@ -79,7 +79,8 @@ public interface IFluxConnector extends INetworkConnector {
 
     long getTransferChange();
 
-    default void setChunkLoaded(boolean chunkLoaded) {}
+    default void setChunkLoaded(boolean chunkLoaded) {
+    }
 
     default ItemStack getDisplayStack() {
         switch (getConnectionType()) {

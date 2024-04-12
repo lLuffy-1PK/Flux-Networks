@@ -1,21 +1,21 @@
 package sonar.fluxnetworks.client.gui.tab;
 
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextFormatting;
 import sonar.fluxnetworks.FluxNetworks;
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.api.gui.EnumNavigationTabs;
 import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
-import sonar.fluxnetworks.api.network.INetworkConnector;
+import sonar.fluxnetworks.api.gui.EnumNavigationTabs;
 import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.network.INetworkConnector;
+import sonar.fluxnetworks.api.network.NetworkSettings;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
 import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 import sonar.fluxnetworks.client.gui.basic.GuiTabPages;
 import sonar.fluxnetworks.client.gui.popups.GuiPopNetworkPassword;
 import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.api.network.NetworkSettings;
 import sonar.fluxnetworks.common.core.FluxUtils;
 import sonar.fluxnetworks.common.item.ItemConfigurator;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.text.TextFormatting;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -36,14 +36,14 @@ public class GuiTabSelection extends GuiTabPages<IFluxNetwork> {
         elementWidth = 146;
     }
 
-    public EnumNavigationTabs getNavigationTab(){
+    public EnumNavigationTabs getNavigationTab() {
         return EnumNavigationTabs.TAB_SELECTION;
     }
 
     @Override
     protected void drawForegroundLayer(int mouseX, int mouseY) {
         super.drawForegroundLayer(mouseX, mouseY);
-        if(elements.size() == 0) {
+        if (elements.size() == 0) {
             renderNavigationPrompt(FluxTranslate.ERROR_NO_NETWORK.t(), FluxTranslate.TAB_CREATE.t());
         } else {
             String amount = FluxTranslate.TOTAL.t() + ": " + elements.size();
@@ -57,10 +57,10 @@ public class GuiTabSelection extends GuiTabPages<IFluxNetwork> {
 
     @Override
     protected void onElementClicked(IFluxNetwork element, int mouseButton) {
-        if(mouseButton == 0) {
+        if (mouseButton == 0) {
             selectedNetwork = element;
             setConnectedNetwork(element.getNetworkID(), "");
-         }
+        }
     }
 
     @Override
@@ -79,15 +79,15 @@ public class GuiTabSelection extends GuiTabPages<IFluxNetwork> {
 
         int color = element.getSetting(NetworkSettings.NETWORK_COLOR);
 
-        float f = (float)(color >> 16 & 255) / 255.0F;
-        float f1 = (float)(color >> 8 & 255) / 255.0F;
-        float f2 = (float)(color & 255) / 255.0F;
+        float f = (float) (color >> 16 & 255) / 255.0F;
+        float f1 = (float) (color >> 8 & 255) / 255.0F;
+        float f2 = (float) (color & 255) / 255.0F;
 
         boolean selected = connector.getNetworkID() == element.getNetworkID();
         boolean isEncrypted = element.getSetting(NetworkSettings.NETWORK_SECURITY).isEncrypted();
 
-        if(isEncrypted) {
-            if(selected) {
+        if (isEncrypted) {
+            if (selected) {
                 drawTexturedModalRect(x + 131, y, 159, 16, 16, elementHeight);
             } else {
                 drawTexturedModalRect(x + 131, y, 175, 16, 16, elementHeight);
@@ -96,7 +96,7 @@ public class GuiTabSelection extends GuiTabPages<IFluxNetwork> {
 
         String text = element.getSetting(NetworkSettings.NETWORK_NAME);
 
-        if(selected) {
+        if (selected) {
             GlStateManager.color(f, f1, f2);
             drawTexturedModalRect(x, y, 0, 16, elementWidth, elementHeight);
             mc.fontRenderer.drawString(text, x + 4, y + 2, 0xffffff);
@@ -111,15 +111,16 @@ public class GuiTabSelection extends GuiTabPages<IFluxNetwork> {
 
     @Override
     public void renderElementTooltip(IFluxNetwork element, int mouseX, int mouseY) {
-        if(hasActivePopup())
-            return;
+        if (hasActivePopup()) {
+        }
         /*GlStateManager.pushMatrix();
         GlStateManager.popMatrix();*/
     }
+
     @Override
     public void mouseMainClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseMainClicked(mouseX, mouseY, mouseButton);
-        if(mouseButton == 0) {
+        if (mouseButton == 0) {
             if (mouseX > guiLeft + 45 && mouseX < guiLeft + 75 && mouseY > guiTop + 10 && mouseY < getGuiTop() + 17) {
                 sortType = FluxUtils.incrementEnum(sortType, SortType.values());
                 sortGrids(sortType);
@@ -130,21 +131,21 @@ public class GuiTabSelection extends GuiTabPages<IFluxNetwork> {
     @Override
     public void updateScreen() {
         super.updateScreen();
-        if(timer2 == 0) {
+        if (timer2 == 0) {
             refreshPages(FluxNetworkCache.instance.getAllClientNetworks());
         }
-        if(FluxNetworks.proxy.getFeedback(true) == EnumFeedbackInfo.SUCCESS) {
-           closePopUp();
-           if(connector instanceof ItemConfigurator.NetworkConnector){
-               ItemConfigurator.NetworkConnector networkConnector = (ItemConfigurator.NetworkConnector)connector;
-               networkConnector.network = selectedNetwork;
-               networkConnector.networkID = selectedNetwork.getNetworkID();
+        if (FluxNetworks.proxy.getFeedback(true) == EnumFeedbackInfo.SUCCESS) {
+            closePopUp();
+            if (connector instanceof ItemConfigurator.NetworkConnector) {
+                ItemConfigurator.NetworkConnector networkConnector = (ItemConfigurator.NetworkConnector) connector;
+                networkConnector.network = selectedNetwork;
+                networkConnector.networkID = selectedNetwork.getNetworkID();
 
-               this.network = selectedNetwork;
-               this.networkValid = !selectedNetwork.isInvalid();
-           }
+                this.network = selectedNetwork;
+                this.networkValid = !selectedNetwork.isInvalid();
+            }
         }
-        if(FluxNetworks.proxy.getFeedback(true) == EnumFeedbackInfo.PASSWORD_REQUIRE) {
+        if (FluxNetworks.proxy.getFeedback(true) == EnumFeedbackInfo.PASSWORD_REQUIRE) {
             openPopUp(new GuiPopNetworkPassword(this, player, connector));
             FluxNetworks.proxy.setFeedback(EnumFeedbackInfo.NONE, true);
         }

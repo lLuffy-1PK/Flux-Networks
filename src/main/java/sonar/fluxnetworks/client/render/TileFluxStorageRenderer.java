@@ -1,11 +1,11 @@
 package sonar.fluxnetworks.client.render;
 
-import sonar.fluxnetworks.common.core.RenderUtils;
-import sonar.fluxnetworks.common.tileentity.TileFluxStorage;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
+import sonar.fluxnetworks.common.core.RenderUtils;
+import sonar.fluxnetworks.common.tileentity.TileFluxStorage;
 
 import static net.minecraft.client.renderer.GlStateManager.*;
 

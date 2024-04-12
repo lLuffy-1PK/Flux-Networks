@@ -1,9 +1,9 @@
 package sonar.fluxnetworks.client.gui.button;
 
-import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
-import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
+import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 
 /**
  * A sliding switch button
@@ -16,11 +16,12 @@ public class SlidedSwitchButton extends GuiButtonCore {
     // control movement
     protected float center;
 
-    private int guiLeft, guiTop;
+    private final int guiLeft;
+    private final int guiTop;
 
     public SlidedSwitchButton(int x, int y, int id, int guiLeft, int guiTop, boolean defaultControl) {
         super(x, y, 16, 8, id);
-        if(defaultControl) {
+        if (defaultControl) {
             slideControl = true;
             center = 8;
         }
@@ -29,7 +30,7 @@ public class SlidedSwitchButton extends GuiButtonCore {
     }
 
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY, int guiLeft, int guiTop){
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, int guiLeft, int guiTop) {
         GlStateManager.pushMatrix();
         GlStateManager.enableAlpha();
         GlStateManager.enableBlend();
@@ -65,15 +66,15 @@ public class SlidedSwitchButton extends GuiButtonCore {
 
 
     public void updateButton(float partialTicks, int mouseX, int mouseY) {
-        float par = partialTicks*4;
-        if(slideControl) {
-            if(center <= 8 - par) {
+        float par = partialTicks * 4;
+        if (slideControl) {
+            if (center <= 8 - par) {
                 center += par;
             } else {
                 center = 8;
             }
         } else {
-            if(center >= par) {
+            if (center >= par) {
                 center -= par;
             } else {
                 center = 0;

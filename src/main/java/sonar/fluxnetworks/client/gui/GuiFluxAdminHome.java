@@ -26,7 +26,7 @@ public class GuiFluxAdminHome extends GuiTabCore {
         super(player, tileEntity);
     }
 
-    public EnumNavigationTabs getNavigationTab(){
+    public EnumNavigationTabs getNavigationTab() {
         return EnumNavigationTabs.TAB_HOME;
     }
 
@@ -53,14 +53,14 @@ public class GuiFluxAdminHome extends GuiTabCore {
     }
 
 
-    public void onSuperAdminChanged(){
+    public void onSuperAdminChanged() {
         super.onSuperAdminChanged();
         super_admin.slideControl = FluxNetworkCache.instance.superAdminClient;
     }
 
-    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton){
+    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton) {
         super.onButtonClicked(button, mouseX, mouseY, mouseButton);
-        if(mouseButton == 0 && button instanceof SlidedSwitchButton) {
+        if (mouseButton == 0 && button instanceof SlidedSwitchButton) {
             SlidedSwitchButton switchButton = (SlidedSwitchButton) button;
             switchButton.switchButton();
             switch (switchButton.id) {
@@ -78,7 +78,7 @@ public class GuiFluxAdminHome extends GuiTabCore {
     @Override
     public void updateScreen() {
         super.updateScreen();
-        if(timer == 0) {
+        if (timer == 0) {
             PacketHandler.network.sendToServer(new PacketNetworkUpdateRequest.UpdateRequestMessage(network.getNetworkID(), NBTType.NETWORK_GENERAL));
             PacketHandler.network.sendToServer(new PacketPermissionRequest.PermissionRequestMessage(network.getNetworkID(), player.getUniqueID()));
         }

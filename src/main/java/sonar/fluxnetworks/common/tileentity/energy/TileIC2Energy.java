@@ -59,6 +59,7 @@ public abstract class TileIC2Energy extends TileRedstoneFlux implements IEnergyS
             IC2Connected = true;
         }
     }
+
     @Override
     @Optional.Method(modid = "ic2")
     public double getDemandedEnergy() {

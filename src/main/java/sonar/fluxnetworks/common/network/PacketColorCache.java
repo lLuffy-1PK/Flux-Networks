@@ -1,12 +1,12 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.FluxNetworks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.FluxNetworks;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class PacketColorCache implements IMessageHandler<PacketColorCache.ColorC
         @Override
         public void toBytes(ByteBuf buf) {
             buf.writeInt(cache.size());
-            cache.forEach((ID,DETAILS)->{
+            cache.forEach((ID, DETAILS) -> {
                 buf.writeInt(ID);
                 buf.writeInt(DETAILS.getFirst());
                 ByteBufUtils.writeUTF8String(buf, DETAILS.getSecond());

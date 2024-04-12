@@ -1,17 +1,18 @@
 package sonar.fluxnetworks.client.gui.button;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import sonar.fluxnetworks.api.network.NetworkSettings;
 import sonar.fluxnetworks.api.network.WirelessType;
 import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
 import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 import sonar.fluxnetworks.client.gui.tab.GuiTabWireless;
-import sonar.fluxnetworks.api.network.NetworkSettings;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 
 public class InventoryButton extends GuiButtonCore {
 
     public WirelessType chargeType;
-    private int texX, texY;
+    private final int texX;
+    private final int texY;
     public GuiTabWireless host;
 
     public InventoryButton(WirelessType chargeType, GuiTabWireless host, int x, int y, int texX, int texY, int width, int height) {
@@ -30,7 +31,7 @@ public class InventoryButton extends GuiButtonCore {
         mc.getTextureManager().bindTexture(GuiDraw.INVENTORY);
         drawTexturedRectangular(x, y, texX, texY + height * (host.settings[id] ? 1 : 0), width, height);
 
-        if(hover) {
+        if (hover) {
             mc.fontRenderer.drawString(text, x + (width - mc.fontRenderer.getStringWidth(text)) / 2 + 1, y - 9, 0xFFFFFF);
         }
 

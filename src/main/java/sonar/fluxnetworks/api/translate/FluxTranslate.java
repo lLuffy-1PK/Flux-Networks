@@ -103,14 +103,18 @@ public class FluxTranslate implements ITranslationProvider {
     public static final Translation STORAGES = i("stat.storage");
 
 
-    /** Server Only (Translation key) **/
+    /**
+     * Server Only (Translation key)
+     **/
     public static final String ACCESS_DENIED_KEY = "info.fluxnetworks.denied.access";
     public static final String ACCESS_OCCUPY_KEY = "info.fluxnetworks.denied.occupy";
     public static final String REMOVAL_DENIED_KEY = "info.fluxnetworks.denied.removal";
     public static final String SA_ON_KEY = "info.fluxnetworks.superadmin.on";
     public static final String SA_OFF_KEY = "info.fluxnetworks.superadmin.off";
 
-    /** Server Only **/
+    /**
+     * Server Only
+     **/
     public static final Translation REJECT = t("info.fluxnetworks.feedback.reject");
     public static final Translation NO_OWNER = t("info.fluxnetworks.feedback.noowner");
     public static final Translation NO_ADMIN = t("info.fluxnetworks.feedback.noadmin");

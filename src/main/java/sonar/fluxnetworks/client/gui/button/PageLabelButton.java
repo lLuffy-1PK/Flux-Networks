@@ -1,15 +1,16 @@
 package sonar.fluxnetworks.client.gui.button;
 
-import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
 
 public class PageLabelButton extends GuiButtonCore {
 
     public int page, pages, color;
     public double currentLeft, singleWidth;
-    private int guiLeft, guiTop;
+    private final int guiLeft;
+    private final int guiTop;
     public int hoveredPage, showTick;
 
     public PageLabelButton(int x, int y, int page, int pages, int color, int guiLeft, int guiTop) {
@@ -30,14 +31,14 @@ public class PageLabelButton extends GuiButtonCore {
 
         boolean b = isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop);
 
-        if(b) {
+        if (b) {
             this.hoveredPage = (int) ((mouseX - guiLeft - x - 1) / singleWidth) + 1;
-            if(hoveredPage != page) {
+            if (hoveredPage != page) {
                 double c = (hoveredPage - 1) * singleWidth + x + 1;
                 drawRect(c, y + 1, c + singleWidth, y + 3, color | 0x60000000);
             }
             drawCenteredString(mc.fontRenderer, hoveredPage + " / " + pages, 88, y + 6, color);
-        } else if(showTick > 0) {
+        } else if (showTick > 0) {
 
             int alpha = Math.min(255, showTick * 32);
 

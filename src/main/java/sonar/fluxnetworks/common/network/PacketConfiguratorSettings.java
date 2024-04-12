@@ -1,7 +1,5 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.common.handler.PacketHandler;
-import sonar.fluxnetworks.common.item.ItemConfigurator;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,6 +9,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import sonar.fluxnetworks.common.core.FluxUtils;
+import sonar.fluxnetworks.common.handler.PacketHandler;
+import sonar.fluxnetworks.common.item.ItemConfigurator;
 
 
 public class PacketConfiguratorSettings implements IMessageHandler<PacketConfiguratorSettings.ConfiguratorSettingsMessage, IMessage> {
@@ -19,11 +19,11 @@ public class PacketConfiguratorSettings implements IMessageHandler<PacketConfigu
     public IMessage onMessage(PacketConfiguratorSettings.ConfiguratorSettingsMessage message, MessageContext ctx) {
         EntityPlayer player = PacketHandler.getPlayer(ctx);
         ItemStack stack = player.getHeldItemMainhand();
-        if(stack.getItem() instanceof ItemConfigurator){
-            if(!message.tag.isEmpty()) {
+        if (stack.getItem() instanceof ItemConfigurator) {
+            if (!message.tag.isEmpty()) {
                 stack.setTagInfo(FluxUtils.CONFIGS_TAG, message.tag);
             }
-            if(message.customName != null){
+            if (message.customName != null) {
                 stack.setStackDisplayName(message.customName);
             }
         }
@@ -35,7 +35,8 @@ public class PacketConfiguratorSettings implements IMessageHandler<PacketConfigu
         public String customName;
         public NBTTagCompound tag;
 
-        public ConfiguratorSettingsMessage() {}
+        public ConfiguratorSettingsMessage() {
+        }
 
         public ConfiguratorSettingsMessage(String customName, NBTTagCompound tag) {
             this.customName = customName;

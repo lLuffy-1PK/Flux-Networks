@@ -1,11 +1,5 @@
 package sonar.fluxnetworks.common.block;
 
-import sonar.fluxnetworks.FluxNetworks;
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.common.core.FluxUtils;
-import sonar.fluxnetworks.api.utils.NBTType;
-import sonar.fluxnetworks.common.item.ItemConfigurator;
-import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -25,6 +19,12 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.FluxNetworks;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
+import sonar.fluxnetworks.api.utils.NBTType;
+import sonar.fluxnetworks.common.core.FluxUtils;
+import sonar.fluxnetworks.common.item.ItemConfigurator;
+import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -44,11 +44,11 @@ public abstract class BlockFluxCore extends BlockCore {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
-        if(worldIn.isRemote) {
+        if (worldIn.isRemote) {
             return true;
         }
 
-        if(playerIn.getHeldItem(hand).getItem() instanceof ItemConfigurator) {
+        if (playerIn.getHeldItem(hand).getItem() instanceof ItemConfigurator) {
             return false;
         }
 
@@ -56,13 +56,13 @@ public abstract class BlockFluxCore extends BlockCore {
 
         if (tileEntity instanceof TileFluxCore) {
             TileFluxCore fluxCore = (TileFluxCore) tileEntity;
-            if(!fluxCore.playerUsing.isEmpty()) {
+            if (!fluxCore.playerUsing.isEmpty()) {
                 TextComponentTranslation textComponents = new TextComponentTranslation(FluxTranslate.ACCESS_OCCUPY_KEY);
                 textComponents.getStyle().setBold(true);
                 textComponents.getStyle().setColor(TextFormatting.DARK_RED);
                 playerIn.sendStatusMessage(textComponents, true);
                 return true;
-            } else if(fluxCore.canAccess(playerIn)) {
+            } else if (fluxCore.canAccess(playerIn)) {
                 playerIn.openGui(FluxNetworks.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
                 return true;
             }
@@ -83,12 +83,12 @@ public abstract class BlockFluxCore extends BlockCore {
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        if(!worldIn.isRemote) {
+        if (!worldIn.isRemote) {
             readDataFromStack(stack, pos, worldIn);
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof TileFluxCore) {
                 TileFluxCore fluxCore = (TileFluxCore) tileEntity;
-                if(placer instanceof EntityPlayer) {
+                if (placer instanceof EntityPlayer) {
                     fluxCore.playerUUID = EntityPlayer.getUUID(((EntityPlayer) placer).getGameProfile());
                 }
             }
@@ -97,7 +97,7 @@ public abstract class BlockFluxCore extends BlockCore {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        if(world.isRemote) {
+        if (world.isRemote) {
             return false;
         }
 
@@ -105,7 +105,7 @@ public abstract class BlockFluxCore extends BlockCore {
 
         if (tile instanceof TileFluxCore) {
             TileFluxCore tileFluxCore = (TileFluxCore) tile;
-            if(tileFluxCore.canAccess(player)) {
+            if (tileFluxCore.canAccess(player)) {
                 ItemStack stack = new ItemStack(this, 1, damageDropped(state));
                 writeDataToStack(stack, pos, world);
 
@@ -147,7 +147,7 @@ public abstract class BlockFluxCore extends BlockCore {
 
     protected void writeDataToStack(ItemStack stack, BlockPos pos, World world) {
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileFluxCore) {
+        if (tile instanceof TileFluxCore) {
             TileFluxCore t = (TileFluxCore) tile;
             NBTTagCompound tag = stack.getOrCreateSubCompound(FluxUtils.FLUX_DATA);
             t.writeCustomNBT(tag, NBTType.TILE_DROP);
@@ -156,10 +156,10 @@ public abstract class BlockFluxCore extends BlockCore {
 
     protected void readDataFromStack(ItemStack stack, BlockPos pos, World world) {
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileFluxCore && stack.hasTagCompound()) {
+        if (tile instanceof TileFluxCore && stack.hasTagCompound()) {
             TileFluxCore t = (TileFluxCore) tile;
             NBTTagCompound tag = stack.getSubCompound(FluxUtils.FLUX_DATA);
-            if(tag != null) {
+            if (tag != null) {
                 t.readCustomNBT(tag, NBTType.TILE_DROP);
             }
         }

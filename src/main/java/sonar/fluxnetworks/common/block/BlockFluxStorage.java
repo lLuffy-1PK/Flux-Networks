@@ -1,10 +1,5 @@
 package sonar.fluxnetworks.common.block;
 
-import sonar.fluxnetworks.FluxConfig;
-import sonar.fluxnetworks.FluxNetworks;
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.client.render.ItemFluxStorageRenderer;
-import sonar.fluxnetworks.common.tileentity.TileFluxStorage;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
@@ -15,6 +10,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import sonar.fluxnetworks.FluxConfig;
+import sonar.fluxnetworks.FluxNetworks;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
+import sonar.fluxnetworks.client.render.ItemFluxStorageRenderer;
+import sonar.fluxnetworks.common.tileentity.TileFluxStorage;
 
 import javax.annotation.Nullable;
 import java.util.List;

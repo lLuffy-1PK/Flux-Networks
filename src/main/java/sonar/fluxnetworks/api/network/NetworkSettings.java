@@ -1,7 +1,7 @@
 package sonar.fluxnetworks.api.network;
 
-import sonar.fluxnetworks.api.utils.EnergyType;
 import sonar.fluxnetworks.api.tiles.IFluxConnector;
+import sonar.fluxnetworks.api.utils.EnergyType;
 import sonar.fluxnetworks.api.utils.ICustomValue;
 import sonar.fluxnetworks.common.connection.FluxNetworkBase;
 import sonar.fluxnetworks.common.connection.NetworkStatistics;

@@ -1,9 +1,9 @@
 package sonar.fluxnetworks.client.gui;
 
-import sonar.fluxnetworks.common.core.FluxUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import sonar.fluxnetworks.common.core.FluxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Line chart that using OpenGL.
+ *
  * @author BloCamLimb
  */
 public class LineChart {
@@ -42,11 +43,11 @@ public class LineChart {
         this.suffixUnitY = suffixUnitY;
 
         this.currentHeight = new ArrayList<>(linePoints);
-        for(int i = 0; i < linePoints; i++) {
+        for (int i = 0; i < linePoints; i++) {
             currentHeight.add((double) (y + height));
         }
         this.targetHeight = new ArrayList<>(linePoints);
-        for(int i = 0; i < linePoints; i++) {
+        for (int i = 0; i < linePoints; i++) {
             targetHeight.add((double) (y + height));
         }
     }
@@ -84,8 +85,8 @@ public class LineChart {
         Gui.drawRect(x - 14, y - 6, x - 13, y + height + 3, 0xffffffff);
 
         GlStateManager.scale(0.625f, 0.625f, 0.625f);
-        mc.fontRenderer.drawString(suffixUnitY,(float) ((x - 15) * 1.6) - mc.fontRenderer.getStringWidth(suffixUnitY), (float) ((y - 7.5) * 1.6), 0xffffff, false);
-        mc.fontRenderer.drawString(displayUnitY,(float) ((x - 15) * 1.6) - mc.fontRenderer.getStringWidth(displayUnitY), (float) ((y - 2) * 1.6), 0xffffff, false);
+        mc.fontRenderer.drawString(suffixUnitY, (float) ((x - 15) * 1.6) - mc.fontRenderer.getStringWidth(suffixUnitY), (float) ((y - 7.5) * 1.6), 0xffffff, false);
+        mc.fontRenderer.drawString(displayUnitY, (float) ((x - 15) * 1.6) - mc.fontRenderer.getStringWidth(displayUnitY), (float) ((y - 2) * 1.6), 0xffffff, false);
         mc.fontRenderer.drawString(displayUnitX, (float) (((x + 118) * 1.6) - mc.fontRenderer.getStringWidth(displayUnitX)), (float) ((y + height + 1.5) * 1.6), 0xffffff, false);
         for (int i = 0; i < data.size(); i++) {
             String d = FluxUtils.format(data.get(i), FluxUtils.TypeNumberFormat.COMPACT, "");
@@ -107,20 +108,20 @@ public class LineChart {
     }
 
     public void updateHeight(float partialTick) {
-        if(currentHeight.size() == 0) {
+        if (currentHeight.size() == 0) {
             return;
         }
-        for(int i = 0; i < currentHeight.size(); i++) {
+        for (int i = 0; i < currentHeight.size(); i++) {
             double a = targetHeight.get(i) - currentHeight.get(i);
-            if(a == 0) {
+            if (a == 0) {
                 continue;
             }
             double c;
             double p = partialTick / 16;
-            if(Math.abs(a) <= p) {
+            if (Math.abs(a) <= p) {
                 c = targetHeight.get(i);
             } else {
-                if(a > 0)
+                if (a > 0)
                     c = currentHeight.get(i) + Math.max(Math.min(a, a / 4 * partialTick), p);
                 else
                     c = currentHeight.get(i) + Math.min(Math.max(a, a / 4 * partialTick), -p);
@@ -132,7 +133,7 @@ public class LineChart {
     private void calculateUnitY(List<Long> data) {
         AtomicLong maxValue = new AtomicLong();
         data.forEach(v -> maxValue.set(Math.max(maxValue.get(), v)));
-        if(maxValue.get() == 0) {
+        if (maxValue.get() == 0) {
             maxUnitY = 1;
             displayUnitY = FluxUtils.format(maxUnitY, FluxUtils.TypeNumberFormat.COMPACT, "");
             return;
@@ -157,11 +158,11 @@ public class LineChart {
     }
 
     private void calculateTargetHeight(List<Long> data) {
-        if(data.size() != linePoints) {
+        if (data.size() != linePoints) {
             return;
         }
         int i = 0;
-        for(Long value : data) {
+        for (Long value : data) {
             targetHeight.set(i, y + height * (1 - ((double) value / maxUnitY)));
             i++;
         }

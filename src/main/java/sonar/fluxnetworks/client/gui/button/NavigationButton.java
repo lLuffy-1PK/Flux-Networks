@@ -1,11 +1,11 @@
 package sonar.fluxnetworks.client.gui.button;
 
-import sonar.fluxnetworks.api.gui.EnumNavigationTabs;
-import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
-import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import sonar.fluxnetworks.api.gui.EnumNavigationTabs;
+import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
+import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 
 public class NavigationButton extends GuiButtonCore {
 
@@ -27,10 +27,10 @@ public class NavigationButton extends GuiButtonCore {
         mc.getTextureManager().bindTexture(GuiDraw.BUTTONS);
         drawTexturedModalRect(x, y, 16 * tab.ordinal(), 16 * getHoverState(isCurrentTab || isMouseHovered(mc, mouseX, mouseY)), 16, 16);
 
-        if(isMouseHovered(mc, mouseX-guiLeft, mouseY-guiTop)) {
+        if (isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop)) {
             FontRenderer fontRenderer = mc.fontRenderer;
             String text = tab.getTranslatedName();
-            fontRenderer.drawString(text, x - fontRenderer.getStringWidth(text) / 2 + 8,  + y - 10, 0xFFFFFF);
+            fontRenderer.drawString(text, x - fontRenderer.getStringWidth(text) / 2 + 8, +y - 10, 0xFFFFFF);
         }
         GlStateManager.popMatrix();
     }

@@ -20,7 +20,7 @@ public enum EnumNavigationTabs {
         this.tabName = tabName;
     }
 
-    public String getTranslatedName(){
+    public String getTranslatedName() {
         return tabName.t();
     }
 }

@@ -9,13 +9,14 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.UUID;
 
-public class NetworkMember{
+public class NetworkMember {
 
     private UUID playerUUID;
     private String cachedName;
     private AccessLevel accessPermission;
 
-    NetworkMember() {}
+    NetworkMember() {
+    }
 
     public NetworkMember(NBTTagCompound nbt) {
         readNetworkNBT(nbt);
@@ -37,16 +38,16 @@ public class NetworkMember{
         MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         boolean isOffline = !server.isServerInOnlineMode();
 
-        if(!isOffline) {
+        if (!isOffline) {
             PlayerProfileCache cache = server.getPlayerProfileCache();
             GameProfile profile = cache.getGameProfileForUsername(username);
-            if(profile != null) {
+            if (profile != null) {
                 t.playerUUID = profile.getId();
             } else {
                 isOffline = true;
             }
         }
-        if(isOffline) {
+        if (isOffline) {
             t.playerUUID = EntityPlayer.getOfflineUUID(username);
         }
         t.cachedName = username;

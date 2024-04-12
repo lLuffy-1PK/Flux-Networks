@@ -16,11 +16,11 @@ public enum WirelessType {
 
     private final Translation typeName;
 
-    WirelessType(Translation typeName){
+    WirelessType(Translation typeName) {
         this.typeName = typeName;
     }
 
-    public boolean isActivated(int setting){
+    public boolean isActivated(int setting) {
         if (this == INVENTORY) {
             return false;
         }
@@ -31,7 +31,7 @@ public enum WirelessType {
         return isActivated(network.getSetting(NetworkSettings.NETWORK_WIRELESS));
     }
 
-    public String getTranslatedName(){
+    public String getTranslatedName() {
         return typeName.t();
     }
 }

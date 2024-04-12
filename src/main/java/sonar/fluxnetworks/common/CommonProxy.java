@@ -1,27 +1,6 @@
 package sonar.fluxnetworks.common;
 
 import com.google.common.collect.Lists;
-import sonar.fluxnetworks.FluxConfig;
-import sonar.fluxnetworks.FluxNetworks;
-import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.common.capabilities.DefaultSuperAdmin;
-import sonar.fluxnetworks.common.connection.FluxNetworkInvalid;
-import sonar.fluxnetworks.common.core.EntityFireItem;
-import sonar.fluxnetworks.api.utils.NBTType;
-import sonar.fluxnetworks.common.data.FluxChunkManager;
-import sonar.fluxnetworks.common.event.FluxConnectionEvent;
-import sonar.fluxnetworks.common.handler.CapabilityHandler;
-import sonar.fluxnetworks.common.handler.PacketHandler;
-import sonar.fluxnetworks.common.handler.TileEntityHandler;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.common.integration.MekanismIntegration;
-import sonar.fluxnetworks.common.integration.TOPIntegration;
-import sonar.fluxnetworks.common.integration.oc.OCIntegration;
-import sonar.fluxnetworks.common.network.PacketNetworkUpdate;
-import sonar.fluxnetworks.common.network.PacketSuperAdmin;
-import sonar.fluxnetworks.common.registry.RegistryBlocks;
-import sonar.fluxnetworks.common.registry.RegistryItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -54,6 +33,27 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import sonar.fluxnetworks.FluxConfig;
+import sonar.fluxnetworks.FluxNetworks;
+import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.utils.NBTType;
+import sonar.fluxnetworks.common.capabilities.DefaultSuperAdmin;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
+import sonar.fluxnetworks.common.connection.FluxNetworkInvalid;
+import sonar.fluxnetworks.common.core.EntityFireItem;
+import sonar.fluxnetworks.common.data.FluxChunkManager;
+import sonar.fluxnetworks.common.event.FluxConnectionEvent;
+import sonar.fluxnetworks.common.handler.CapabilityHandler;
+import sonar.fluxnetworks.common.handler.PacketHandler;
+import sonar.fluxnetworks.common.handler.TileEntityHandler;
+import sonar.fluxnetworks.common.integration.MekanismIntegration;
+import sonar.fluxnetworks.common.integration.TOPIntegration;
+import sonar.fluxnetworks.common.integration.oc.OCIntegration;
+import sonar.fluxnetworks.common.network.PacketNetworkUpdate;
+import sonar.fluxnetworks.common.network.PacketSuperAdmin;
+import sonar.fluxnetworks.common.registry.RegistryBlocks;
+import sonar.fluxnetworks.common.registry.RegistryItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class CommonProxy {
         TileEntityHandler.registerEnergyHandler();
         FluxConfig.init(event.getModConfigurationDirectory());
         EntityRegistry.registerModEntity(new ResourceLocation(FluxNetworks.MODID, "Flux"), EntityFireItem.class, "Flux", 0, FluxNetworks.instance, 64, 10, true);
-        if(Loader.isModLoaded("mekanism")){
+        if (Loader.isModLoaded("mekanism")) {
             MekanismIntegration.preInit();
         }
         this.ocLoaded = Loader.isModLoaded("opencomputers");
@@ -84,9 +84,9 @@ public class CommonProxy {
 
     public void init(FMLInitializationEvent event) {
         DefaultSuperAdmin.register();
-        FMLInterModComms.sendMessage("carryon", "blacklistBlock",  FluxNetworks.MODID + ":*");
+        FMLInterModComms.sendMessage("carryon", "blacklistBlock", FluxNetworks.MODID + ":*");
         FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", TOPIntegration.class.getName());
-        if(ocLoaded) {
+        if (ocLoaded) {
             OCIntegration.init();
         }
     }
@@ -119,15 +119,15 @@ public class CommonProxy {
 
     @SubscribeEvent(receiveCanceled = true)
     public void onPlayerInteract(PlayerInteractEvent.LeftClickBlock event) {
-        if(event.getSide().isServer()) {
-            if(!FluxConfig.enableFluxRecipe) {
+        if (event.getSide().isServer()) {
+            if (!FluxConfig.enableFluxRecipe) {
                 return;
             }
             World world = event.getWorld();
             BlockPos pos = event.getPos();
             if (world.getBlockState(pos).getBlock().equals(Blocks.OBSIDIAN) && world.getBlockState(pos.down(2)).getBlock().equals(Blocks.BEDROCK)) {
                 List<EntityItem> entities = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.down()));
-                if(entities.isEmpty())
+                if (entities.isEmpty())
                     return;
                 List<EntityItem> s = Lists.newArrayList();
                 AtomicInteger count = new AtomicInteger();
@@ -181,8 +181,8 @@ public class CommonProxy {
                 network.onStartServerTick();
             }
         }*/
-        if(event.phase == TickEvent.Phase.END) {
-            for(IFluxNetwork network : FluxNetworkCache.instance.getAllNetworks()) {
+        if (event.phase == TickEvent.Phase.END) {
+            for (IFluxNetwork network : FluxNetworkCache.instance.getAllNetworks()) {
                 network.onEndServerTick();
             }
         }
@@ -191,7 +191,7 @@ public class CommonProxy {
     @SubscribeEvent
     public void onPlayerJoined(PlayerEvent.PlayerLoggedInEvent event) {
         EntityPlayer player = event.player;
-        if(!player.world.isRemote) {
+        if (!player.world.isRemote) {
             PacketHandler.network.sendTo(new PacketNetworkUpdate.NetworkUpdateMessage(new ArrayList<>(FluxNetworkCache.instance.getAllNetworks()), NBTType.NETWORK_GENERAL), (EntityPlayerMP) player);
             PacketHandler.network.sendTo(new PacketSuperAdmin.SuperAdminMessage(DefaultSuperAdmin.isPlayerSuperAdmin(player)), (EntityPlayerMP) player);
         }
@@ -199,14 +199,14 @@ public class CommonProxy {
 
     @SubscribeEvent
     public void onFluxConnected(FluxConnectionEvent.Connected event) {
-        if(!event.flux.getFluxWorld().isRemote) {
+        if (!event.flux.getFluxWorld().isRemote) {
             event.flux.connect(event.network);
         }
     }
 
     @SubscribeEvent
     public void onFluxDisconnect(FluxConnectionEvent.Disconnected event) {
-        if(!event.flux.getFluxWorld().isRemote) {
+        if (!event.flux.getFluxWorld().isRemote) {
             event.flux.disconnect(event.network);
         }
     }
@@ -215,9 +215,11 @@ public class CommonProxy {
         return null;
     }
 
-    public void setFeedback(EnumFeedbackInfo info, boolean operation) {}
+    public void setFeedback(EnumFeedbackInfo info, boolean operation) {
+    }
 
-    public void receiveColorCache(Map<Integer, Tuple<Integer, String>> cache) {}
+    public void receiveColorCache(Map<Integer, Tuple<Integer, String>> cache) {
+    }
 
     public EntityPlayer getPlayer(MessageContext ctx) {
         return ctx.getServerHandler().player;

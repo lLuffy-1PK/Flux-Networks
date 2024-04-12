@@ -1,14 +1,14 @@
 package sonar.fluxnetworks.common.block;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import sonar.fluxnetworks.FluxNetworks;
 import sonar.fluxnetworks.common.CommonProxy;
 import sonar.fluxnetworks.common.item.ItemFluxConnector;
 import sonar.fluxnetworks.common.registry.RegistryBlocks;
 import sonar.fluxnetworks.common.registry.RegistryItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 
 public class BlockCore extends Block {
 

@@ -1,18 +1,18 @@
 package sonar.fluxnetworks.client.gui.popups;
 
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextFormatting;
 import sonar.fluxnetworks.FluxNetworks;
-import sonar.fluxnetworks.api.translate.FluxTranslate;
 import sonar.fluxnetworks.api.network.AccessLevel;
 import sonar.fluxnetworks.api.network.INetworkConnector;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
 import sonar.fluxnetworks.client.gui.button.NormalButton;
 import sonar.fluxnetworks.client.gui.tab.GuiTabMembers;
 import sonar.fluxnetworks.common.handler.PacketHandler;
 import sonar.fluxnetworks.common.network.PacketGeneral;
 import sonar.fluxnetworks.common.network.PacketGeneralHandler;
 import sonar.fluxnetworks.common.network.PacketGeneralType;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.text.TextFormatting;
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ public class GuiPopUserEdit extends GuiPopCore<GuiTabMembers> {
         popButtons.clear();
         boolean editPermission = host.accessPermission.canEdit();
         boolean ownerPermission = host.accessPermission.canDelete();
-        if(host.selectedPlayer.getAccessPermission() != AccessLevel.OWNER && editPermission) {
+        if (host.selectedPlayer.getAccessPermission() != AccessLevel.OWNER && editPermission) {
             String text;
             int length;
             int i = 0;
@@ -39,30 +39,30 @@ public class GuiPopUserEdit extends GuiPopCore<GuiTabMembers> {
                 text = FluxTranslate.SET_USER.t();
                 length = Math.max(64, fontRenderer.getStringWidth(text) + 4);
                 popButtons.add(new NormalButton(text, 88 - length / 2, 76 + 16 * i++, length, 12, 0));
-                if(host.selectedPlayer.getAccessPermission() == AccessLevel.SUPER_ADMIN && ownerPermission) {
+                if (host.selectedPlayer.getAccessPermission() == AccessLevel.SUPER_ADMIN && ownerPermission) {
                     text = FluxTranslate.TRANSFER_OWNERSHIP.t();
                     length = Math.max(64, fontRenderer.getStringWidth(text) + 4);
                     transferOwnership = new NormalButton(text, 88 - length / 2, 76 + 16 * i++, length, 12, 4).setUnclickable().setTextColor(0xffaa00aa);
                     popButtons.add(transferOwnership);
                 }
             } else {
-                if(ownerPermission) {
+                if (ownerPermission) {
                     if (host.selectedPlayer.getAccessPermission() == AccessLevel.USER) {
                         text = FluxTranslate.SET_ADMIN.t();
                         length = Math.max(64, fontRenderer.getStringWidth(text) + 4);
                         popButtons.add(new NormalButton(text, 88 - length / 2, 76 + 16 * i++, length, 12, 1));
-                    } else if(host.selectedPlayer.getAccessPermission() == AccessLevel.ADMIN) {
+                    } else if (host.selectedPlayer.getAccessPermission() == AccessLevel.ADMIN) {
                         text = FluxTranslate.SET_USER.t();
                         length = Math.max(64, fontRenderer.getStringWidth(text) + 4);
                         popButtons.add(new NormalButton(text, 88 - length / 2, 76 + 16 * i++, length, 12, 2));
                     }
                 }
-                if(!host.selectedPlayer.getAccessPermission().canEdit() || ownerPermission) {
+                if (!host.selectedPlayer.getAccessPermission().canEdit() || ownerPermission) {
                     text = FluxTranslate.CANCEL_MEMBERSHIP.t();
                     length = Math.max(64, fontRenderer.getStringWidth(text) + 4);
                     popButtons.add(new NormalButton(text, 88 - length / 2, 76 + 16 * i++, length, 12, 3).setTextColor(0xffff5555));
                 }
-                if(ownerPermission) {
+                if (ownerPermission) {
                     text = FluxTranslate.TRANSFER_OWNERSHIP.t();
                     length = Math.max(64, fontRenderer.getStringWidth(text) + 4);
                     transferOwnership = new NormalButton(text, 88 - length / 2, 76 + 16 * i++, length, 12, 4).setUnclickable().setTextColor(0xffaa00aa);
@@ -71,6 +71,7 @@ public class GuiPopUserEdit extends GuiPopCore<GuiTabMembers> {
             }
         }
     }
+
     @Override
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         drawRectWithBackground(20, 34, 100, 138, 0xccffffff, 0x80000000);
@@ -86,23 +87,21 @@ public class GuiPopUserEdit extends GuiPopCore<GuiTabMembers> {
     }
 
 
-
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        for(NormalButton button : popButtons) {
-            if(button.clickable && button.isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop)) {
+        for (NormalButton button : popButtons) {
+            if (button.clickable && button.isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop)) {
                 PacketHandler.network.sendToServer(new PacketGeneral.GeneralMessage(PacketGeneralType.CHANGE_PERMISSION, PacketGeneralHandler.getChangePermissionPacket(host.network.getNetworkID(), host.selectedPlayer.getPlayerUUID(), button.id)));
             }
         }
     }
 
 
-
     @Override
     public void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
-        if(transferOwnership != null) {
+        if (transferOwnership != null) {
             if (keyCode == 42) {
                 transferOwnershipCount++;
                 if (transferOwnershipCount > 1) {

@@ -1,17 +1,17 @@
 package sonar.fluxnetworks.client.gui.button;
 
+import net.minecraft.client.gui.FontRenderer;
 import sonar.fluxnetworks.client.gui.basic.GuiTextField;
 import sonar.fluxnetworks.client.gui.basic.ITextBoxButton;
-import net.minecraft.client.gui.FontRenderer;
 
 public class TextboxButton extends GuiTextField {
 
     private String origin;
-    private String extraText;
-    private int textWidth;
+    private final String extraText;
+    private final int textWidth;
     private boolean digitsOnly;
     private boolean hexOnly;
-    private ITextBoxButton gui;
+    private final ITextBoxButton gui;
 
     private int outlineColor = 0xffb4b4b4;
     private static final int boxColor = 0x20000000;
@@ -32,7 +32,7 @@ public class TextboxButton extends GuiTextField {
         /*if(getText().isEmpty()) {
             return 0;
         }*/
-        if(nonNegative) {
+        if (nonNegative) {
             return Math.max(Integer.parseInt(getText()), 0);
         }
         return Integer.parseInt(getText());
@@ -42,7 +42,7 @@ public class TextboxButton extends GuiTextField {
         /*if(getText().isEmpty()) {
             return 0;
         }*/
-        if(nonNegative) {
+        if (nonNegative) {
             return Math.max(Long.parseLong(getText()), 0);
         }
         return Long.parseLong(getText());
@@ -100,12 +100,12 @@ public class TextboxButton extends GuiTextField {
 
     @Override
     public void writeText(String textToWrite) {
-        if(digitsOnly) {
-            for(int i = 0; i < textToWrite.length(); i++) {
+        if (digitsOnly) {
+            for (int i = 0; i < textToWrite.length(); i++) {
                 char c = textToWrite.charAt(i);
-                if(!Character.isDigit(c)) {
-                    if(getText().isEmpty()) {
-                        if(c != '-') {
+                if (!Character.isDigit(c)) {
+                    if (getText().isEmpty()) {
+                        if (c != '-') {
                             return;
                         }
                     } else {
@@ -114,10 +114,10 @@ public class TextboxButton extends GuiTextField {
                 }
             }
         }
-        if(hexOnly) {
-            for(int i = 0; i < textToWrite.length(); i++) {
+        if (hexOnly) {
+            for (int i = 0; i < textToWrite.length(); i++) {
                 char c = textToWrite.charAt(i);
-                if(c == '-') {
+                if (c == '-') {
                     return;
                 }
             }
@@ -138,11 +138,11 @@ public class TextboxButton extends GuiTextField {
      */
     @Override
     public void switchFocused(boolean isFocusedIn) {
-        if(digitsOnly) {
-            if(isFocusedIn) {
+        if (digitsOnly) {
+            if (isFocusedIn) {
                 origin = getText();
             } else {
-                if(getText().isEmpty() || getText().equals("-")) {
+                if (getText().isEmpty() || getText().equals("-")) {
                     setText("0");
                     return;
                 }
@@ -153,7 +153,7 @@ public class TextboxButton extends GuiTextField {
                 }
             }
         }
-        if(!isFocusedIn) {
+        if (!isFocusedIn) {
             gui.onTextBoxChanged(this);
         }
     }

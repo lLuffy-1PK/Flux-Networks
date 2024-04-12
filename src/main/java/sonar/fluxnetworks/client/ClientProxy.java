@@ -1,15 +1,5 @@
 package sonar.fluxnetworks.client;
 
-import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.client.render.FluxStorageModel;
-import sonar.fluxnetworks.client.render.TileFluxStorageRenderer;
-import sonar.fluxnetworks.common.CommonProxy;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.common.handler.LocalizationHandler;
-import sonar.fluxnetworks.common.registry.RegistryBlocks;
-import sonar.fluxnetworks.common.registry.RegistryItems;
-import sonar.fluxnetworks.common.tileentity.TileFluxStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourceManager;
@@ -27,12 +17,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
+import sonar.fluxnetworks.client.render.FluxStorageModel;
+import sonar.fluxnetworks.client.render.TileFluxStorageRenderer;
+import sonar.fluxnetworks.common.CommonProxy;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
+import sonar.fluxnetworks.common.handler.LocalizationHandler;
+import sonar.fluxnetworks.common.registry.RegistryBlocks;
+import sonar.fluxnetworks.common.registry.RegistryItems;
+import sonar.fluxnetworks.common.tileentity.TileFluxStorage;
 
 import java.util.Map;
 
 public class ClientProxy extends CommonProxy {
 
-    private LocalizationHandler localizationHandler = new LocalizationHandler();
+    private final LocalizationHandler localizationHandler = new LocalizationHandler();
     private EnumFeedbackInfo feedbackInfo = EnumFeedbackInfo.NONE; // Text message.
     private EnumFeedbackInfo feedbackInfoSuccess = EnumFeedbackInfo.NONE; // Special operation.
     private int feedbackTimer = 0;
@@ -61,13 +61,14 @@ public class ClientProxy extends CommonProxy {
         FluxColorHandler.reset();
         FluxNetworkCache.instance.clearClientCache();
     }
+
     @Override
     public void registerItemModel(Item item, int meta, String variant) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), variant));
     }
 
     @SubscribeEvent
-    public void clientFlux(FMLNetworkEvent.ClientDisconnectionFromServerEvent event){
+    public void clientFlux(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
         onServerStopped(); //FMLServerStoppedEvent is not fired on the client side when disconnecting from a server
     }
 
@@ -89,10 +90,10 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        if(event.phase == TickEvent.Phase.END) {
-            if(feedbackInfo.hasFeedback()) {
+        if (event.phase == TickEvent.Phase.END) {
+            if (feedbackInfo.hasFeedback()) {
                 feedbackTimer++;
-                if(feedbackTimer >= 60) {
+                if (feedbackTimer >= 60) {
                     feedbackTimer = 0;
                     setFeedback(EnumFeedbackInfo.NONE, false);
                 }
@@ -107,7 +108,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void setFeedback(EnumFeedbackInfo info, boolean operation) {
-        if(operation) {
+        if (operation) {
             this.feedbackInfoSuccess = info;
         } else {
             this.feedbackInfo = info;

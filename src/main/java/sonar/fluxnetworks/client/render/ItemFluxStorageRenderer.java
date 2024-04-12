@@ -1,9 +1,5 @@
 package sonar.fluxnetworks.client.render;
 
-import sonar.fluxnetworks.client.FluxColorHandler;
-import sonar.fluxnetworks.common.block.BlockFluxStorage;
-import sonar.fluxnetworks.common.data.FluxNetworkData;
-import sonar.fluxnetworks.common.core.FluxUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -12,6 +8,10 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import sonar.fluxnetworks.client.FluxColorHandler;
+import sonar.fluxnetworks.common.block.BlockFluxStorage;
+import sonar.fluxnetworks.common.core.FluxUtils;
+import sonar.fluxnetworks.common.data.FluxNetworkData;
 
 public class ItemFluxStorageRenderer extends TileEntityItemStackRenderer {
 
@@ -28,7 +28,7 @@ public class ItemFluxStorageRenderer extends TileEntityItemStackRenderer {
 
         BlockFluxStorage block = (BlockFluxStorage) Block.getBlockFromItem(stack.getItem());
         NBTTagCompound tag = stack.getSubCompound(FluxUtils.FLUX_DATA);
-        if(tag != null) {
+        if (tag != null) {
             int colour = FluxColorHandler.getOrRequestNetworkColor(tag.getInteger(FluxNetworkData.NETWORK_ID));
             TileFluxStorageRenderer.render(tag.getLong("energy"), block.getMaxStorage(), colour, 0.0D, 0.0D, 0.0D);
         }

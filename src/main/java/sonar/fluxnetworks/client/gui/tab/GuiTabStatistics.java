@@ -20,14 +20,14 @@ import sonar.fluxnetworks.common.registry.RegistryBlocks;
 
 public class GuiTabStatistics extends GuiTabCore {
 
-    private NetworkStatistics stats = network.getSetting(NetworkSettings.NETWORK_STATISTICS);
+    private final NetworkStatistics stats = network.getSetting(NetworkSettings.NETWORK_STATISTICS);
     private LineChart chart;
     private int timer = 0;
-    private static NBTTagCompound GUI_COLOR_TAG;
-    private static ItemStack plug;
-    private static ItemStack point;
-    private static ItemStack storage;
-    private static ItemStack controller;
+    private static final NBTTagCompound GUI_COLOR_TAG;
+    private static final ItemStack plug;
+    private static final ItemStack point;
+    private static final ItemStack storage;
+    private static final ItemStack controller;
 
     static {
         GUI_COLOR_TAG = new NBTTagCompound();

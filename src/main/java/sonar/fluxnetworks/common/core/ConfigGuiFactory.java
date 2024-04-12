@@ -1,9 +1,9 @@
 package sonar.fluxnetworks.common.core;
 
-import sonar.fluxnetworks.client.gui.GuiModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
+import sonar.fluxnetworks.client.gui.GuiModConfig;
 
 import java.util.Set;
 

@@ -1,11 +1,13 @@
 package sonar.fluxnetworks.client.gui.tab;
 
 import com.google.common.collect.Lists;
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.api.utils.EnergyType;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextFormatting;
 import sonar.fluxnetworks.api.gui.EnumNavigationTabs;
 import sonar.fluxnetworks.api.network.INetworkConnector;
 import sonar.fluxnetworks.api.network.SecurityType;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
+import sonar.fluxnetworks.api.utils.EnergyType;
 import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
 import sonar.fluxnetworks.client.gui.basic.GuiTabCore;
 import sonar.fluxnetworks.client.gui.button.ColorButton;
@@ -13,13 +15,13 @@ import sonar.fluxnetworks.client.gui.button.TextboxButton;
 import sonar.fluxnetworks.client.gui.popups.GuiPopCore;
 import sonar.fluxnetworks.client.gui.popups.GuiPopCustomColour;
 import sonar.fluxnetworks.common.core.FluxUtils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.text.TextFormatting;
 
 import java.io.IOException;
 import java.util.List;
 
-/**the base class for settings and creation guis*/
+/**
+ * the base class for settings and creation guis
+ */
 public abstract class GuiTabEditAbstract extends GuiTabCore {
 
     protected List<ColorButton> colorButtons = Lists.newArrayList();
@@ -44,7 +46,7 @@ public abstract class GuiTabEditAbstract extends GuiTabCore {
         buttonLists.add(colorButtons);
         configureNavigationButtons(getNavigationTab(), navigationTabs);
 
-        if(networkValid || getNavigationTab() == EnumNavigationTabs.TAB_CREATE){
+        if (networkValid || getNavigationTab() == EnumNavigationTabs.TAB_CREATE) {
             int l = fontRenderer.getStringWidth(FluxTranslate.NETWORK_NAME.t());
             name = TextboxButton.create(this, "", 1, fontRenderer, 20 + l, 28, 140 - l, 12);
             name.setMaxStringLength(24);
@@ -80,7 +82,7 @@ public abstract class GuiTabEditAbstract extends GuiTabCore {
     public void mouseMainClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseMainClicked(mouseX, mouseY, mouseButton);
         ////TODO replace with "text buttons
-        if(mouseButton == 0) {
+        if (mouseButton == 0) {
             if (mouseX > guiLeft + 50 && mouseX < guiLeft + 150 && mouseY > guiTop + 48 && mouseY < getGuiTop() + 60) {
                 securityType = FluxUtils.incrementEnum(securityType, SecurityType.values());
                 password.setText("");
@@ -95,22 +97,22 @@ public abstract class GuiTabEditAbstract extends GuiTabCore {
     }
 
     @Override
-    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton){
+    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton) {
         super.onButtonClicked(button, mouseX, mouseY, mouseButton);
-        if(button instanceof ColorButton){
+        if (button instanceof ColorButton) {
             color.selected = false;
-            color = (ColorButton)button;
+            color = (ColorButton) button;
             color.selected = true;
             onEditSettingsChanged();
-            if(mouseButton == 1) {
+            if (mouseButton == 1) {
                 openPopUp(new GuiPopCustomColour(this, color.color, player, connector));
             }
         }
     }
 
-    public void onPopUpClose(GuiPopCore popUp){
+    public void onPopUpClose(GuiPopCore popUp) {
         super.onPopUpClose(popUp);
-        if(popUp instanceof GuiPopCustomColour){
+        if (popUp instanceof GuiPopCustomColour) {
             this.color.color = ((GuiPopCustomColour) popUp).currentColour;
         }
     }

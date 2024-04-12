@@ -1,10 +1,10 @@
 package sonar.fluxnetworks.common.capabilities;
 
-import sonar.fluxnetworks.api.network.ISuperAdmin;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import sonar.fluxnetworks.api.network.ISuperAdmin;
 
 import javax.annotation.Nullable;
 

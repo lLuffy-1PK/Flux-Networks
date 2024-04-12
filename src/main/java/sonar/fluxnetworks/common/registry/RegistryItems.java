@@ -1,10 +1,10 @@
 package sonar.fluxnetworks.common.registry;
 
+import net.minecraft.item.Item;
 import sonar.fluxnetworks.common.item.ItemAdminConfigurator;
 import sonar.fluxnetworks.common.item.ItemConfigurator;
 import sonar.fluxnetworks.common.item.ItemCore;
 import sonar.fluxnetworks.common.item.ItemFlux;
-import net.minecraft.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;

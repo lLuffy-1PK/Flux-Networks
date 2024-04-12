@@ -1,17 +1,5 @@
 package sonar.fluxnetworks.common.core;
 
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.api.network.ConnectionType;
-import sonar.fluxnetworks.api.utils.EnergyType;
-import sonar.fluxnetworks.api.utils.FluxConfigurationType;
-import sonar.fluxnetworks.api.network.FluxLogicType;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.api.tiles.IFluxConnector;
-import sonar.fluxnetworks.client.gui.button.SlidedSwitchButton;
-import sonar.fluxnetworks.client.gui.button.TextboxButton;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.common.item.ItemFluxConnector;
-import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,6 +10,18 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.api.network.ConnectionType;
+import sonar.fluxnetworks.api.network.FluxLogicType;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.tiles.IFluxConnector;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
+import sonar.fluxnetworks.api.utils.EnergyType;
+import sonar.fluxnetworks.api.utils.FluxConfigurationType;
+import sonar.fluxnetworks.client.gui.button.SlidedSwitchButton;
+import sonar.fluxnetworks.client.gui.button.TextboxButton;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
+import sonar.fluxnetworks.common.item.ItemFluxConnector;
+import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
@@ -49,35 +49,35 @@ public class FluxUtils {
 
     @Nullable
     public static EnumFacing getBlockDirection(BlockPos pos, BlockPos other) {
-        for(EnumFacing face : EnumFacing.VALUES) {
-            if(pos.offset(face).equals(other))
+        for (EnumFacing face : EnumFacing.VALUES) {
+            if (pos.offset(face).equals(other))
                 return face;
         }
         return null;
     }
 
     public static String getTransferInfo(ConnectionType type, EnergyType energyType, long change) {
-        if(type.isPlug()) {
+        if (type.isPlug()) {
             String b = FluxUtils.format(change, FluxUtils.TypeNumberFormat.COMMAS, energyType, true);
-            if(change == 0) {
+            if (change == 0) {
                 return FluxTranslate.INPUT.t() + ": " + TextFormatting.GOLD + b;
             } else {
                 return FluxTranslate.INPUT.t() + ": " + TextFormatting.GREEN + "+" + b;
             }
         }
-        if(type.isPoint() || type.isController()) {
+        if (type.isPoint() || type.isController()) {
             String b = FluxUtils.format(-change, FluxUtils.TypeNumberFormat.COMMAS, energyType, true);
-            if(change == 0) {
+            if (change == 0) {
                 return FluxTranslate.OUTPUT.t() + ": " + TextFormatting.GOLD + b;
             } else {
                 return FluxTranslate.OUTPUT.t() + ": " + TextFormatting.RED + "-" + b;
             }
         }
         // Storage are inverted
-        if(type == ConnectionType.STORAGE) {
-            if(change == 0) {
+        if (type == ConnectionType.STORAGE) {
+            if (change == 0) {
                 return FluxTranslate.CHANGE.t() + ": " + TextFormatting.GOLD + change + energyType.getUsageSuffix();
-            } else if(change > 0) {
+            } else if (change > 0) {
                 return FluxTranslate.CHANGE.t() + ": " + TextFormatting.RED + "-" + FluxUtils.format(change, FluxUtils.TypeNumberFormat.COMMAS, energyType, true);
             } else {
                 return FluxTranslate.CHANGE.t() + ": " + TextFormatting.GREEN + "+" + FluxUtils.format(-change, FluxUtils.TypeNumberFormat.COMMAS, energyType, true);
@@ -138,7 +138,7 @@ public class FluxUtils {
     }*/
 
     public static <T> boolean addWithCheck(Collection<T> list, T toAdd) {
-        if(toAdd != null && !list.contains(toAdd)) {
+        if (toAdd != null && !list.contains(toAdd)) {
             list.add(toAdd);
             return true;
         }
@@ -152,10 +152,10 @@ public class FluxUtils {
 
 
     public static boolean addConnection(IFluxConnector fluxConnector) {
-        if(fluxConnector.getNetworkID() != -1) {
+        if (fluxConnector.getNetworkID() != -1) {
             IFluxNetwork network = FluxNetworkCache.instance.getNetwork(fluxConnector.getNetworkID());
-            if(!network.isInvalid()) {
-                if(fluxConnector.getConnectionType().isController() && network.getConnections(FluxLogicType.CONTROLLER).size() > 0) {
+            if (!network.isInvalid()) {
+                if (fluxConnector.getConnectionType().isController() && network.getConnections(FluxLogicType.CONTROLLER).size() > 0) {
                     return false;
                 }
                 network.queueConnectionAddition(fluxConnector);
@@ -166,11 +166,10 @@ public class FluxUtils {
     }
 
     public static void removeConnection(IFluxConnector fluxConnector, boolean isChunkUnload) {
-        if(fluxConnector.getNetworkID() != -1) {
+        if (fluxConnector.getNetworkID() != -1) {
             IFluxNetwork network = FluxNetworkCache.instance.getNetwork(fluxConnector.getNetworkID());
-            if(!network.isInvalid()) {
+            if (!network.isInvalid()) {
                 network.queueConnectionRemoval(fluxConnector, isChunkUnload);
-                return;
             }
         }
     }
@@ -230,30 +229,30 @@ public class FluxUtils {
     }
 
     public static String format(long in, TypeNumberFormat style, EnergyType energy, boolean usage) {
-        if(energy == EnergyType.EU) {
+        if (energy == EnergyType.EU) {
             return format(in / 4, style, usage ? energy.getUsageSuffix() : energy.getStorageSuffix());
         }
         return format(in, style, usage ? energy.getUsageSuffix() : energy.getStorageSuffix());
     }
 
     public static boolean checkPassword(String str) {
-        for(int i = 0; i < str.length(); i++) {
-            if(!Character.isLetterOrDigit(str.charAt(i)))
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isLetterOrDigit(str.charAt(i)))
                 return false;
         }
         return true;
     }
 
     public static NBTTagCompound copyConfiguration(TileFluxCore flux, NBTTagCompound config) {
-        for(FluxConfigurationType type : FluxConfigurationType.VALUES){
+        for (FluxConfigurationType type : FluxConfigurationType.VALUES) {
             type.copy.copyFromTile(config, type.getNBTName(), flux);
         }
         return config;
     }
 
     public static void pasteConfiguration(TileFluxCore flux, NBTTagCompound config) {
-        for(FluxConfigurationType type : FluxConfigurationType.VALUES){
-            if(config.hasKey(type.getNBTName())) {
+        for (FluxConfigurationType type : FluxConfigurationType.VALUES) {
+            if (config.hasKey(type.getNBTName())) {
                 type.paste.pasteToTile(config, type.getNBTName(), flux);
             }
         }

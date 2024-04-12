@@ -1,16 +1,16 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.api.utils.Coord4D;
-import sonar.fluxnetworks.api.network.FluxLogicType;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.api.tiles.IFluxConnector;
-import sonar.fluxnetworks.common.connection.FluxLiteConnector;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.api.network.FluxLogicType;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.tiles.IFluxConnector;
+import sonar.fluxnetworks.api.utils.Coord4D;
+import sonar.fluxnetworks.common.connection.FluxLiteConnector;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,11 @@ public class PacketConnectionUpdateRequest implements IMessageHandler<PacketConn
 
     @Override
     public IMessage onMessage(ConnectionRequestMessage message, MessageContext ctx) {
-        if(message.coords.isEmpty()) {
+        if (message.coords.isEmpty()) {
             return null;
         }
         IFluxNetwork network = FluxNetworkCache.instance.getNetwork(message.networkID);
-        if(!network.isInvalid()) {
+        if (!network.isInvalid()) {
             List<NBTTagCompound> tags = new ArrayList<>();
             //noinspection unchecked
             List<IFluxConnector> onlineConnectors = network.getConnections(FluxLogicType.ANY);
@@ -53,7 +53,7 @@ public class PacketConnectionUpdateRequest implements IMessageHandler<PacketConn
         public void fromBytes(ByteBuf buf) {
             networkID = buf.readInt();
             int size = buf.readInt();
-            for(int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 coords.add(new Coord4D(buf));
             }
         }

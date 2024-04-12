@@ -4,5 +4,6 @@ import sonar.fluxnetworks.client.gui.button.TextboxButton;
 
 public interface ITextBoxButton {
 
-    default void onTextBoxChanged(TextboxButton text) {}
+    default void onTextBoxChanged(TextboxButton text) {
+    }
 }

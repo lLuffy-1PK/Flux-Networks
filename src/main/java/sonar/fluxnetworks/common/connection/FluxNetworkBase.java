@@ -28,7 +28,8 @@ public abstract class FluxNetworkBase implements IFluxNetwork {
     public ICustomValue<List<IFluxConnector>> all_connectors = new CustomValue<>(new ArrayList<>());
     public ICustomValue<List<NetworkMember>> network_players = new CustomValue<>(new ArrayList<>());
 
-    public FluxNetworkBase() {}
+    public FluxNetworkBase() {
+    }
 
     public FluxNetworkBase(int id, String name, SecurityType security, int color, UUID owner, EnergyType energy, String password) {
         network_id.setValue(id);
@@ -41,8 +42,8 @@ public abstract class FluxNetworkBase implements IFluxNetwork {
     }
 
     @Override
-    public <T> T getSetting(NetworkSettings<T> setting){
-        return (T) setting.getValue(this).getValue();
+    public <T> T getSetting(NetworkSettings<T> setting) {
+        return setting.getValue(this).getValue();
     }
 
     @Override
@@ -52,7 +53,7 @@ public abstract class FluxNetworkBase implements IFluxNetwork {
 
     @Override
     public void readNetworkNBT(NBTTagCompound nbt, NBTType type) {
-        if(type == NBTType.NETWORK_GENERAL || type == NBTType.ALL_SAVE) {
+        if (type == NBTType.NETWORK_GENERAL || type == NBTType.ALL_SAVE) {
             network_id.setValue(nbt.getInteger(FluxNetworkData.NETWORK_ID));
             network_name.setValue(nbt.getString(FluxNetworkData.NETWORK_NAME));
             network_owner.setValue(nbt.getUniqueId(FluxNetworkData.OWNER_UUID));
@@ -62,27 +63,27 @@ public abstract class FluxNetworkBase implements IFluxNetwork {
             network_energy.setValue(EnergyType.values()[nbt.getInteger(FluxNetworkData.ENERGY_TYPE)]);
             network_wireless.setValue(nbt.getInteger(FluxNetworkData.WIRELESS_MODE));
 
-            if(type == NBTType.ALL_SAVE) {
+            if (type == NBTType.ALL_SAVE) {
                 FluxNetworkData.readPlayers(this, nbt);
                 FluxNetworkData.readConnections(this, nbt);
             }
         }
 
-        if(type == NBTType.NETWORK_PLAYERS) {
+        if (type == NBTType.NETWORK_PLAYERS) {
             FluxNetworkData.readPlayers(this, nbt);
         }
 
-        if(type == NBTType.NETWORK_CONNECTIONS) {
+        if (type == NBTType.NETWORK_CONNECTIONS) {
             FluxNetworkData.readAllConnections(this, nbt);
         }
-        if(type == NBTType.NETWORK_STATISTICS) {
+        if (type == NBTType.NETWORK_STATISTICS) {
             network_stats.getValue().readNBT(nbt);
         }
     }
 
     @Override
     public void writeNetworkNBT(NBTTagCompound nbt, NBTType type) {
-        if(type == NBTType.NETWORK_GENERAL || type == NBTType.ALL_SAVE) {
+        if (type == NBTType.NETWORK_GENERAL || type == NBTType.ALL_SAVE) {
             nbt.setInteger(FluxNetworkData.NETWORK_ID, network_id.getValue());
             nbt.setString(FluxNetworkData.NETWORK_NAME, network_name.getValue());
             nbt.setUniqueId(FluxNetworkData.OWNER_UUID, network_owner.getValue());
@@ -92,27 +93,27 @@ public abstract class FluxNetworkBase implements IFluxNetwork {
             nbt.setInteger(FluxNetworkData.ENERGY_TYPE, network_energy.getValue().ordinal());
             nbt.setInteger(FluxNetworkData.WIRELESS_MODE, network_wireless.getValue());
 
-            if(type == NBTType.ALL_SAVE) {
+            if (type == NBTType.ALL_SAVE) {
                 FluxNetworkData.writePlayers(this, nbt);
                 FluxNetworkData.writeConnections(this, nbt);
             }
         }
 
-        if(type == NBTType.NETWORK_PLAYERS) {
+        if (type == NBTType.NETWORK_PLAYERS) {
             FluxNetworkData.writeAllPlayers(this, nbt);
         }
 
-        if(type == NBTType.NETWORK_CONNECTIONS) {
+        if (type == NBTType.NETWORK_CONNECTIONS) {
             all_connectors.getValue().removeIf(IFluxConnector::isChunkLoaded);
             @SuppressWarnings("unchecked")
             List<IFluxConnector> connectors = getConnections(FluxLogicType.ANY);
             connectors.forEach(f -> all_connectors.getValue().add(new FluxLiteConnector(f)));
             FluxNetworkData.writeAllConnections(this, nbt);
         }
-        if(type == NBTType.NETWORK_STATISTICS) {
+        if (type == NBTType.NETWORK_STATISTICS) {
             network_stats.getValue().writeNBT(nbt);
         }
-        if(type == NBTType.NETWORK_CLEAR) {
+        if (type == NBTType.NETWORK_CLEAR) {
             nbt.setBoolean("clear", true); // Nothing
         }
 

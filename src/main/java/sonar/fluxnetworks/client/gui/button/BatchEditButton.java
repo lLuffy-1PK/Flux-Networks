@@ -1,9 +1,9 @@
 package sonar.fluxnetworks.client.gui.button;
 
-import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
-import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
+import sonar.fluxnetworks.client.gui.basic.GuiDraw;
 
 public class BatchEditButton extends GuiButtonCore {
 
@@ -17,7 +17,7 @@ public class BatchEditButton extends GuiButtonCore {
         GlStateManager.pushMatrix();
         GlStateManager.enableAlpha();
         GlStateManager.enableBlend();
-        if(clickable) {
+        if (clickable) {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0f);
         } else {
             GlStateManager.color(0.5F, 0.5F, 0.5F, 1.0f);
@@ -28,7 +28,7 @@ public class BatchEditButton extends GuiButtonCore {
         mc.getTextureManager().bindTexture(GuiDraw.BUTTONS);
         drawTexturedModalRect(x, y, 16 * id, 48 + (b ? 16 : 0), 12, 12);
 
-        if(clickable && b) {
+        if (clickable && b) {
             mc.fontRenderer.drawString(text, x - mc.fontRenderer.getStringWidth(text) / 2 + 6, y - 9, 0xFFFFFF);
         }
 

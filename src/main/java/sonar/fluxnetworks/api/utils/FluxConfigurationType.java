@@ -1,17 +1,17 @@
 package sonar.fluxnetworks.api.utils;
 
+import net.minecraft.nbt.NBTTagCompound;
 import sonar.fluxnetworks.api.network.IFluxNetwork;
 import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 import sonar.fluxnetworks.common.tileentity.TileFluxCore;
-import net.minecraft.nbt.NBTTagCompound;
 
 ///TODO remove common references
 public class FluxConfigurationType {
-    public static FluxConfigurationType NETWORK = new FluxConfigurationType(0,"network", FluxConfigurationType::copyNetwork, FluxConfigurationType::pasteNetwork);
-    public static FluxConfigurationType PRIORITY = new FluxConfigurationType(2,"priority", FluxConfigurationType::copyPriority, FluxConfigurationType::pastePriority);
-    public static FluxConfigurationType PRIORITY_SETTING = new FluxConfigurationType(3,"p_setting", FluxConfigurationType::copyPrioritySetting, FluxConfigurationType::pastePrioritySetting);
-    public static FluxConfigurationType TRANSFER = new FluxConfigurationType(4,"transfer", FluxConfigurationType::copyTransfer, FluxConfigurationType::pasteTransfer);
-    public static FluxConfigurationType TRANSFER_SETTING = new FluxConfigurationType(5,"t_setting", FluxConfigurationType::copyTransferSetting, FluxConfigurationType::pasteTransferSetting);
+    public static FluxConfigurationType NETWORK = new FluxConfigurationType(0, "network", FluxConfigurationType::copyNetwork, FluxConfigurationType::pasteNetwork);
+    public static FluxConfigurationType PRIORITY = new FluxConfigurationType(2, "priority", FluxConfigurationType::copyPriority, FluxConfigurationType::pastePriority);
+    public static FluxConfigurationType PRIORITY_SETTING = new FluxConfigurationType(3, "p_setting", FluxConfigurationType::copyPrioritySetting, FluxConfigurationType::pastePrioritySetting);
+    public static FluxConfigurationType TRANSFER = new FluxConfigurationType(4, "transfer", FluxConfigurationType::copyTransfer, FluxConfigurationType::pasteTransfer);
+    public static FluxConfigurationType TRANSFER_SETTING = new FluxConfigurationType(5, "t_setting", FluxConfigurationType::copyTransferSetting, FluxConfigurationType::pasteTransferSetting);
 
     public static FluxConfigurationType[] VALUES = new FluxConfigurationType[]{NETWORK, PRIORITY, PRIORITY_SETTING, TRANSFER, TRANSFER_SETTING};
 
@@ -20,7 +20,7 @@ public class FluxConfigurationType {
     public ICopyMethod copy;
     public IPasteMethod paste;
 
-    public FluxConfigurationType(int ordinal, String key, ICopyMethod copy, IPasteMethod paste){
+    public FluxConfigurationType(int ordinal, String key, ICopyMethod copy, IPasteMethod paste) {
         this.ordinal = ordinal;
         this.key = key;
         this.copy = copy;

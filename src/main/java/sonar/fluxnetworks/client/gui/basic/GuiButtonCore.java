@@ -32,11 +32,13 @@ public abstract class GuiButtonCore extends Gui {
         this.id = id;
     }
 
-    private final void drawButton(Minecraft mc, int mouseX, int mouseY) {}
+    private final void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    }
 
     public abstract void drawButton(Minecraft mc, int mouseX, int mouseY, int guiLeft, int guiTop);
 
-    public void updateButton(float partialTicks, int mouseX, int mouseY) {}
+    public void updateButton(float partialTicks, int mouseX, int mouseY) {
+    }
 
     protected int getHoverState(boolean b) {
         return b ? 1 : 0;
@@ -68,10 +70,10 @@ public abstract class GuiButtonCore extends Gui {
 
     public static void drawRect(double left, double top, double right, double bottom, int color) {
 
-        float f3 = (float)(color >> 24 & 255) / 255.0F;
-        float f = (float)(color >> 16 & 255) / 255.0F;
-        float f1 = (float)(color >> 8 & 255) / 255.0F;
-        float f2 = (float)(color & 255) / 255.0F;
+        float f3 = (float) (color >> 24 & 255) / 255.0F;
+        float f = (float) (color >> 16 & 255) / 255.0F;
+        float f1 = (float) (color >> 8 & 255) / 255.0F;
+        float f2 = (float) (color & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         GlStateManager.enableBlend();

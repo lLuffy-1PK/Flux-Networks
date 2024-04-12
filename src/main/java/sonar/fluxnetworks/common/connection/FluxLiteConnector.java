@@ -1,15 +1,15 @@
 package sonar.fluxnetworks.common.connection;
 
-import sonar.fluxnetworks.api.network.ConnectionType;
-import sonar.fluxnetworks.api.utils.Coord4D;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.api.network.ITransferHandler;
-import sonar.fluxnetworks.api.tiles.IFluxConnector;
-import sonar.fluxnetworks.api.utils.NBTType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.api.network.ConnectionType;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.network.ITransferHandler;
+import sonar.fluxnetworks.api.tiles.IFluxConnector;
+import sonar.fluxnetworks.api.utils.Coord4D;
+import sonar.fluxnetworks.api.utils.NBTType;
 
 import java.util.UUID;
 
@@ -129,10 +129,12 @@ public class FluxLiteConnector implements IFluxConnector {
     }
 
     @Override
-    public void open(EntityPlayer player) {}
+    public void open(EntityPlayer player) {
+    }
 
     @Override
-    public void close(EntityPlayer player) {}
+    public void close(EntityPlayer player) {
+    }
 
     @Override
     public UUID getConnectionOwner() {
@@ -160,10 +162,12 @@ public class FluxLiteConnector implements IFluxConnector {
     }
 
     @Override
-    public void connect(IFluxNetwork network) {}
+    public void connect(IFluxNetwork network) {
+    }
 
     @Override
-    public void disconnect(IFluxNetwork network) {}
+    public void disconnect(IFluxNetwork network) {
+    }
 
     @Override
     public ITransferHandler getTransferHandler() {

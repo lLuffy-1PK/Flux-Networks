@@ -1,13 +1,13 @@
 package sonar.fluxnetworks.common.capabilities;
 
-import sonar.fluxnetworks.FluxConfig;
-import sonar.fluxnetworks.api.utils.Capabilities;
-import sonar.fluxnetworks.api.network.ISuperAdmin;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import sonar.fluxnetworks.FluxConfig;
+import sonar.fluxnetworks.api.network.ISuperAdmin;
+import sonar.fluxnetworks.api.utils.Capabilities;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 
 public class DefaultSuperAdmin implements ISuperAdmin {
 
@@ -40,16 +40,16 @@ public class DefaultSuperAdmin implements ISuperAdmin {
 
     //// UTIL METHODS \\\\
 
-    public static boolean canActivateSuperAdmin(EntityPlayer player){
-        if(FMLCommonHandler.instance().getMinecraftServerInstance().isSinglePlayer()){
+    public static boolean canActivateSuperAdmin(EntityPlayer player) {
+        if (FMLCommonHandler.instance().getMinecraftServerInstance().isSinglePlayer()) {
             return true;
         }
         int permissionLevel = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getOppedPlayers().getPermissionLevel(player.getGameProfile());
         return permissionLevel >= FluxConfig.superAdminRequiredPermission;
     }
 
-    public static boolean isPlayerSuperAdmin(EntityPlayer player){
-        if(!player.world.isRemote) {
+    public static boolean isPlayerSuperAdmin(EntityPlayer player) {
+        if (!player.world.isRemote) {
             ISuperAdmin iSuperAdmin = player.getCapability(Capabilities.SUPER_ADMIN, null);
             return iSuperAdmin != null && iSuperAdmin.getPermission();
         }

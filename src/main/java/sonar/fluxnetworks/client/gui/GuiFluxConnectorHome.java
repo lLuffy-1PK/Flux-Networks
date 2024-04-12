@@ -24,7 +24,7 @@ public class GuiFluxConnectorHome extends GuiTabCore {
 
     public SlidedSwitchButton surge, disableLimit, chunkLoad;
 
-    private TileFluxCore tileEntity;
+    private final TileFluxCore tileEntity;
     private int timer;
 
     public GuiFluxConnectorHome(EntityPlayer player, TileFluxCore tileEntity) {
@@ -32,7 +32,7 @@ public class GuiFluxConnectorHome extends GuiTabCore {
         this.tileEntity = tileEntity;
     }
 
-    public EnumNavigationTabs getNavigationTab(){
+    public EnumNavigationTabs getNavigationTab() {
         return EnumNavigationTabs.TAB_HOME;
     }
 
@@ -45,7 +45,7 @@ public class GuiFluxConnectorHome extends GuiTabCore {
 
         fontRenderer.drawString(FluxTranslate.SURGE_MODE.t(), 20, 120, network.getSetting(NetworkSettings.NETWORK_COLOR));
         fontRenderer.drawString(FluxTranslate.DISABLE_LIMIT.t(), 20, 132, network.getSetting(NetworkSettings.NETWORK_COLOR));
-        if(!tileEntity.getConnectionType().isStorage()) {
+        if (!tileEntity.getConnectionType().isStorage()) {
             fontRenderer.drawString(FluxTranslate.CHUNK_LOADING.t(), 20, 144, network.getSetting(NetworkSettings.NETWORK_COLOR));
         }
     }
@@ -73,7 +73,7 @@ public class GuiFluxConnectorHome extends GuiTabCore {
         switches.add(surge);
         switches.add(disableLimit);
 
-        if(!tileEntity.getConnectionType().isStorage()) {
+        if (!tileEntity.getConnectionType().isStorage()) {
             chunkLoad = new SlidedSwitchButton(140, 144, 3, guiLeft, guiTop, tileEntity.chunkLoading);
             switches.add(chunkLoad);
         }
@@ -85,23 +85,23 @@ public class GuiFluxConnectorHome extends GuiTabCore {
 
     @Override
     public void onTextBoxChanged(TextboxButton text) {
-        if(text == fluxName) {
+        if (text == fluxName) {
             tileEntity.customName = fluxName.getText();
             PacketHandler.network.sendToServer(new PacketByteBuf.ByteBufMessage(tileEntity, tileEntity.getPos(), 1));
-        } else if(text == priority) {
+        } else if (text == priority) {
             tileEntity.priority = priority.getIntegerFromText(false);
             PacketHandler.network.sendToServer(new PacketByteBuf.ByteBufMessage(tileEntity, tileEntity.getPos(), 2));
-        } else if(text == limit) {
+        } else if (text == limit) {
             tileEntity.limit = Math.min(limit.getLongFromText(true), tileEntity.getMaxTransferLimit());
             limit.setText(String.valueOf(tileEntity.limit));
             PacketHandler.network.sendToServer(new PacketByteBuf.ByteBufMessage(tileEntity, tileEntity.getPos(), 3));
         }
     }
 
-    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton){
+    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton) {
         super.onButtonClicked(button, mouseX, mouseY, mouseButton);
-        if(mouseButton == 0 && button instanceof SlidedSwitchButton){
-            SlidedSwitchButton switchButton = (SlidedSwitchButton)button;
+        if (mouseButton == 0 && button instanceof SlidedSwitchButton) {
+            SlidedSwitchButton switchButton = (SlidedSwitchButton) button;
             switchButton.switchButton();
             switch (switchButton.id) {
                 case 1:
@@ -122,10 +122,10 @@ public class GuiFluxConnectorHome extends GuiTabCore {
     @Override
     public void updateScreen() {
         super.updateScreen();
-        if(timer == 0) {
+        if (timer == 0) {
             PacketHandler.network.sendToServer(new PacketNetworkUpdateRequest.UpdateRequestMessage(network.getNetworkID(), NBTType.NETWORK_GENERAL));
         }
-        if(timer % 4 == 0) {
+        if (timer % 4 == 0) {
             if (chunkLoad != null) {
                 chunkLoad.slideControl = tileEntity.chunkLoading;
             }

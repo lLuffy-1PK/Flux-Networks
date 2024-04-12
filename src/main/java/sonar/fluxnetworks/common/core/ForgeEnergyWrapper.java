@@ -1,8 +1,8 @@
 package sonar.fluxnetworks.common.core;
 
-import sonar.fluxnetworks.api.tiles.IFluxConnector;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
+import sonar.fluxnetworks.api.tiles.IFluxConnector;
 
 import javax.annotation.Nullable;
 

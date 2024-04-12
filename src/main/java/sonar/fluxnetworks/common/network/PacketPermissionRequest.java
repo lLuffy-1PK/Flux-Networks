@@ -1,14 +1,14 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.api.network.AccessLevel;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.api.network.AccessLevel;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 
 import java.util.UUID;
 

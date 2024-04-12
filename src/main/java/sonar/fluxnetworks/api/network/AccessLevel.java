@@ -1,8 +1,8 @@
 package sonar.fluxnetworks.api.network;
 
+import net.minecraft.util.text.TextFormatting;
 import sonar.fluxnetworks.api.translate.FluxTranslate;
 import sonar.fluxnetworks.api.translate.Translation;
-import net.minecraft.util.text.TextFormatting;
 
 public enum AccessLevel {
     OWNER(FluxTranslate.OWNER, 0xffaa00, TextFormatting.GOLD),

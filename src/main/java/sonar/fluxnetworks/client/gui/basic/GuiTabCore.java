@@ -22,7 +22,9 @@ import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 import java.io.IOException;
 import java.util.List;
 
-/**for guis which have navigation tabs along the top */
+/**
+ * for guis which have navigation tabs along the top
+ */
 public abstract class GuiTabCore extends GuiFluxCore {
 
     protected List<NavigationButton> navigationButtons = Lists.newArrayList();
@@ -42,11 +44,11 @@ public abstract class GuiTabCore extends GuiFluxCore {
 
     public abstract EnumNavigationTabs getNavigationTab();
 
-    public void setDefaultTabs(){
+    public void setDefaultTabs() {
         this.navigationTabs = EnumNavigationTabs.values();
     }
 
-    public void setNavigationTabs(EnumNavigationTabs[] navigationTabs){
+    public void setNavigationTabs(EnumNavigationTabs[] navigationTabs) {
         this.navigationTabs = navigationTabs;
     }
 
@@ -54,10 +56,10 @@ public abstract class GuiTabCore extends GuiFluxCore {
     protected void keyTypedMain(char c, int k) throws IOException {
         super.keyTypedMain(c, k);
         if (k == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(k)) {
-            if(textBoxes.stream().noneMatch(GuiTextField::isFocused)) {
-                if(this.getNavigationTab() == EnumNavigationTabs.TAB_HOME){
+            if (textBoxes.stream().noneMatch(GuiTextField::isFocused)) {
+                if (this.getNavigationTab() == EnumNavigationTabs.TAB_HOME) {
                     mc.player.closeScreen();
-                }else {
+                } else {
                     switchTab(EnumNavigationTabs.TAB_HOME, player, connector);
                     FluxNetworks.proxy.setFeedback(EnumFeedbackInfo.NONE, false);
                     if (FluxConfig.enableButtonSound)
@@ -68,21 +70,21 @@ public abstract class GuiTabCore extends GuiFluxCore {
     }
 
 
-    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton){
-        if(mouseButton == 0 && button instanceof NavigationButton){
-            switchTab(((NavigationButton)button).tab, player, connector);
+    public void onButtonClicked(GuiButtonCore button, int mouseX, int mouseY, int mouseButton) {
+        if (mouseButton == 0 && button instanceof NavigationButton) {
+            switchTab(((NavigationButton) button).tab, player, connector);
             if (FluxConfig.enableButtonSound)
                 mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(RegistrySounds.BUTTON_CLICK, 1.0F));
         }
     }
 
-    public void configureNavigationButtons(EnumNavigationTabs currentTab, EnumNavigationTabs[] availableTabs){
+    public void configureNavigationButtons(EnumNavigationTabs currentTab, EnumNavigationTabs[] availableTabs) {
         int posCount = 0;
-        for(EnumNavigationTabs tab : availableTabs){
-            if(tab != EnumNavigationTabs.TAB_CREATE){
+        for (EnumNavigationTabs tab : availableTabs) {
+            if (tab != EnumNavigationTabs.TAB_CREATE) {
                 navigationButtons.add(new NavigationButton(12 + (18 * posCount), -16, tab));
                 posCount++;
-            }else {
+            } else {
                 navigationButtons.add(new NavigationButton(148, -16, tab));
             }
         }
@@ -92,18 +94,18 @@ public abstract class GuiTabCore extends GuiFluxCore {
     public static void switchTab(EnumNavigationTabs tab, EntityPlayer player, INetworkConnector connector) {
         switch (tab) {
             case TAB_HOME:
-                if(connector instanceof TileFluxCore) {
+                if (connector instanceof TileFluxCore) {
                     FMLCommonHandler.instance().showGuiScreen(new GuiFluxConnectorHome(player, (TileFluxCore) connector));
-                } else if(connector instanceof ItemAdminConfigurator.AdminConnector) {
+                } else if (connector instanceof ItemAdminConfigurator.AdminConnector) {
                     FMLCommonHandler.instance().showGuiScreen(new GuiFluxAdminHome(player, connector));
-                } else if(connector instanceof ItemConfigurator.NetworkConnector) {
-                    FMLCommonHandler.instance().showGuiScreen(new GuiFluxConfiguratorHome(player, (ItemConfigurator.NetworkConnector)connector));
-                }else {
+                } else if (connector instanceof ItemConfigurator.NetworkConnector) {
+                    FMLCommonHandler.instance().showGuiScreen(new GuiFluxConfiguratorHome(player, (ItemConfigurator.NetworkConnector) connector));
+                } else {
                     player.closeScreen();
                 }
                 break;
             case TAB_SELECTION:
-                if(connector instanceof ItemAdminConfigurator.AdminConnector && FluxNetworks.proxy.detailed_network_view) {
+                if (connector instanceof ItemAdminConfigurator.AdminConnector && FluxNetworks.proxy.detailed_network_view) {
                     FMLCommonHandler.instance().showGuiScreen(new GuiTabDetailedSelection(player, connector));
                     break;
                 }

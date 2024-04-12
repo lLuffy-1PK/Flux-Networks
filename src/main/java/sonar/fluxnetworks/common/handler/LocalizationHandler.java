@@ -1,11 +1,11 @@
 package sonar.fluxnetworks.common.handler;
 
-import sonar.fluxnetworks.api.translate.ITranslationProvider;
-import sonar.fluxnetworks.api.translate.Translation;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.resource.IResourceType;
 import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
+import sonar.fluxnetworks.api.translate.ITranslationProvider;
+import sonar.fluxnetworks.api.translate.Translation;
 
 import java.util.ArrayList;
 import java.util.List;

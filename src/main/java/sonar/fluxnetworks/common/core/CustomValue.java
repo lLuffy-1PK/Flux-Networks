@@ -6,7 +6,7 @@ public class CustomValue<T> implements ICustomValue<T> {
 
     public T value;
 
-    public CustomValue(T value){
+    public CustomValue(T value) {
         setValue(value);
     }
 
@@ -21,7 +21,7 @@ public class CustomValue<T> implements ICustomValue<T> {
 
     @Override
     public void setValue(T set) {
-        if(value == null || (set != null && !set.equals(value))) {
+        if (value == null || (set != null && !set.equals(value))) {
             value = set;
         }
     }

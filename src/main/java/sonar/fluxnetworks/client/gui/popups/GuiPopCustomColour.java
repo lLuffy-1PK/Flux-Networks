@@ -1,12 +1,12 @@
 package sonar.fluxnetworks.client.gui.popups;
 
-import sonar.fluxnetworks.api.translate.FluxTranslate;
+import net.minecraft.entity.player.EntityPlayer;
 import sonar.fluxnetworks.api.network.INetworkConnector;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
 import sonar.fluxnetworks.client.gui.basic.GuiFluxCore;
 import sonar.fluxnetworks.client.gui.basic.GuiTextField;
 import sonar.fluxnetworks.client.gui.button.NormalButton;
 import sonar.fluxnetworks.client.gui.button.TextboxButton;
-import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.IOException;
 
@@ -46,17 +46,16 @@ public class GuiPopCustomColour extends GuiPopCore<GuiFluxCore> {
     }
 
 
-
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        if(mouseButton == 0) {
-            for(NormalButton button : popButtons) {
-                if(button.isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop)) {
-                    if(button.id == 11) {
+        if (mouseButton == 0) {
+            for (NormalButton button : popButtons) {
+                if (button.isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop)) {
+                    if (button.id == 11) {
                         host.closePopUp();
                     }
-                    if(button.id == 12) {
+                    if (button.id == 12) {
                         currentColour = customColor.getIntegerFromHex();
                         host.closePopUp();
                     }
@@ -67,16 +66,15 @@ public class GuiPopCustomColour extends GuiPopCore<GuiFluxCore> {
     }
 
 
-
     @Override
     public void keyTyped(char c, int k) {
         if (k == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(k)) {
-            if(popBoxes.stream().noneMatch(GuiTextField::isFocused)) {
+            if (popBoxes.stream().noneMatch(GuiTextField::isFocused)) {
                 host.closePopUp();
             }
         }
-        for(TextboxButton text : popBoxes) {
-            if(text.isFocused()) {
+        for (TextboxButton text : popBoxes) {
+            if (text.isFocused()) {
                 text.textboxKeyTyped(c, k);
                 colorApply.clickable = text.getText().length() == 6;
             }

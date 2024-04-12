@@ -1,12 +1,12 @@
 package sonar.fluxnetworks.common.core;
 
-import sonar.fluxnetworks.common.registry.RegistryItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.common.registry.RegistryItems;
 
 import javax.annotation.Nonnull;
 

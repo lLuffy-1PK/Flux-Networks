@@ -15,24 +15,25 @@ public class SimpleObservableList<T> extends ArrayList<T> {
 
     public List<IListWatcher<T>> watchers = new ArrayList<>();
 
-    public SimpleObservableList(){}
+    public SimpleObservableList() {
+    }
 
-    public void addWatcher(IListWatcher<T> watcher){
-        if(!watchers.contains(watcher))
+    public void addWatcher(IListWatcher<T> watcher) {
+        if (!watchers.contains(watcher))
             watchers.add(watcher);
     }
 
-    public void removeWatcher(IListWatcher<T> watcher){
+    public void removeWatcher(IListWatcher<T> watcher) {
         watchers.remove(watcher);
     }
 
-    public void updateList(List<T> updatedList){
+    public void updateList(List<T> updatedList) {
         List<T> newElements = Lists.newArrayList(updatedList);
         List<T> currentElements = Lists.newArrayList(this);
         currentElements.remove(newElements);
 
         Iterator<T> it = newElements.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
 
         }
     }
@@ -40,7 +41,7 @@ public class SimpleObservableList<T> extends ArrayList<T> {
     @Override
     public boolean add(T t) {
         boolean add = super.add(t);
-        if(add){
+        if (add) {
             watchers.forEach(w -> w.onElementAdded(t));
         }
         return add;
@@ -49,8 +50,8 @@ public class SimpleObservableList<T> extends ArrayList<T> {
     @Override
     public boolean remove(Object o) {
         boolean remove = super.remove(o);
-        if(remove){
-            watchers.forEach(w -> w.onElementRemoved((T)o));
+        if (remove) {
+            watchers.forEach(w -> w.onElementRemoved((T) o));
         }
         return remove;
     }
@@ -58,7 +59,7 @@ public class SimpleObservableList<T> extends ArrayList<T> {
     @Override
     public boolean addAll(Collection<? extends T> c) {
         boolean addAll = super.addAll(c);
-        if(addAll){
+        if (addAll) {
             watchers.forEach(IListWatcher::onListChanged);
         }
         return addAll;
@@ -67,7 +68,7 @@ public class SimpleObservableList<T> extends ArrayList<T> {
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         boolean addAll = super.addAll(index, c);
-        if(addAll){
+        if (addAll) {
             watchers.forEach(IListWatcher::onListChanged);
         }
         return addAll;
@@ -76,7 +77,7 @@ public class SimpleObservableList<T> extends ArrayList<T> {
     @Override
     public boolean removeAll(Collection<?> c) {
         boolean removeAll = super.removeAll(c);
-        if(removeAll){
+        if (removeAll) {
             watchers.forEach(IListWatcher::onListChanged);
         }
         return removeAll;
@@ -100,20 +101,26 @@ public class SimpleObservableList<T> extends ArrayList<T> {
     public void add(int index, T element) {
         int original_size = size();
         super.add(index, element);
-        if(size() != original_size){
+        if (size() != original_size) {
             watchers.forEach(w -> w.onElementAdded(element));
         }
     }
 
-    public interface IListWatcher<T>{
+    public interface IListWatcher<T> {
 
-        /**when one specific element has been added*/
+        /**
+         * when one specific element has been added
+         */
         void onElementAdded(@Nullable T added);
 
-        /**when one specific element has been removed*/
+        /**
+         * when one specific element has been removed
+         */
         void onElementRemoved(@Nullable T added);
 
-        /**when large amount of elements may have changed*/
+        /**
+         * when large amount of elements may have changed
+         */
         void onListChanged();
     }
 }

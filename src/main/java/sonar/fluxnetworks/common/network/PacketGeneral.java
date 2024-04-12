@@ -1,6 +1,5 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.common.handler.PacketHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -9,6 +8,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.common.handler.PacketHandler;
 
 /**
  * Gui operation packets.
@@ -19,10 +19,10 @@ public class PacketGeneral implements IMessageHandler<PacketGeneral.GeneralMessa
     public IMessage onMessage(GeneralMessage message, MessageContext ctx) {
 
         EntityPlayer player = PacketHandler.getPlayer(ctx);
-        if(player != null) {
+        if (player != null) {
             PacketHandler.handlePacket(() -> {
                 IMessage returned = message.handler.handler.handlePacket(player, message.nbtTag);
-                if(returned != null && player instanceof EntityPlayerMP) {
+                if (returned != null && player instanceof EntityPlayerMP) {
                     PacketHandler.network.sendTo(returned, (EntityPlayerMP) player);
                 }
             }, ctx.netHandler);
@@ -35,7 +35,8 @@ public class PacketGeneral implements IMessageHandler<PacketGeneral.GeneralMessa
         public PacketGeneralType handler;
         public NBTTagCompound nbtTag;
 
-        public GeneralMessage() {}
+        public GeneralMessage() {
+        }
 
         public GeneralMessage(PacketGeneralType handler, NBTTagCompound nbtTag) {
             super();

@@ -1,13 +1,13 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.api.network.NetworkSettings;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.network.NetworkSettings;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,10 +19,10 @@ public class PacketColorRequest implements IMessageHandler<PacketColorRequest.Co
     @Override
     public IMessage onMessage(ColorRequestMessage message, MessageContext ctx) {
         Map<Integer, Tuple<Integer, String>> cache = new HashMap<>();
-        if(!message.requests.isEmpty()){
-            for(int id : message.requests){
+        if (!message.requests.isEmpty()) {
+            for (int id : message.requests) {
                 IFluxNetwork network = FluxNetworkCache.instance.getNetwork(id);
-                cache.put(id, new Tuple<>(network.getSetting(NetworkSettings.NETWORK_COLOR) | 0xff000000, network.isInvalid() ? "NONE": network.getSetting(NetworkSettings.NETWORK_NAME)));
+                cache.put(id, new Tuple<>(network.getSetting(NetworkSettings.NETWORK_COLOR) | 0xff000000, network.isInvalid() ? "NONE" : network.getSetting(NetworkSettings.NETWORK_NAME)));
             } // More than one
             return new PacketColorCache.ColorCacheMessage(cache);
         }
@@ -44,7 +44,7 @@ public class PacketColorRequest implements IMessageHandler<PacketColorRequest.Co
         public void fromBytes(ByteBuf buf) {
             requests = new ArrayList<>();
             int size = buf.readInt();
-            for(int i = 0; i < size; i++){
+            for (int i = 0; i < size; i++) {
                 requests.add(buf.readInt());
             }
         }

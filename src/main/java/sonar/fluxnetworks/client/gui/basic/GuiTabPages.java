@@ -1,17 +1,19 @@
 package sonar.fluxnetworks.client.gui.basic;
 
 import com.google.common.collect.Lists;
-import sonar.fluxnetworks.api.translate.FluxTranslate;
-import sonar.fluxnetworks.api.network.INetworkConnector;
-import sonar.fluxnetworks.client.gui.button.PageLabelButton;
-import sonar.fluxnetworks.api.network.NetworkSettings;
-import sonar.fluxnetworks.api.translate.Translation;
 import net.minecraft.entity.player.EntityPlayer;
+import sonar.fluxnetworks.api.network.INetworkConnector;
+import sonar.fluxnetworks.api.network.NetworkSettings;
+import sonar.fluxnetworks.api.translate.FluxTranslate;
+import sonar.fluxnetworks.api.translate.Translation;
+import sonar.fluxnetworks.client.gui.button.PageLabelButton;
 
 import java.io.IOException;
 import java.util.List;
 
-/**for tabs which have multiple pages: e.g. Network Selection, Network Connections */
+/**
+ * for tabs which have multiple pages: e.g. Network Selection, Network Connections
+ */
 public abstract class GuiTabPages<T> extends GuiTabCore {
 
     public List<T> elements = Lists.newArrayList();
@@ -29,19 +31,19 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
     @Override
     protected void drawForegroundLayer(int mouseX, int mouseY) {
         super.drawForegroundLayer(mouseX, mouseY);
-        if(pages > 1) {
+        if (pages > 1) {
             labelButton.drawButton(mc, mouseX, mouseY, guiLeft, guiTop);
         }
         int i = 0;
-        for(T s : current) {
+        for (T s : current) {
             int y = (gridStartY + gridHeight * i);
             renderElement(s, gridStartX, y);
             i++;
         }
         i = 0;
-        for(T s : current) {
+        for (T s : current) {
             int y = (gridStartY + gridHeight * i);
-            if(mouseX >= gridStartX + guiLeft && mouseY >= y + guiTop && mouseX < (gridStartX + elementWidth) + guiLeft && mouseY < y + elementHeight + guiTop) {
+            if (mouseX >= gridStartX + guiLeft && mouseY >= y + guiTop && mouseX < (gridStartX + elementWidth) + guiLeft && mouseY < y + elementHeight + guiTop) {
                 renderElementTooltip(s, mouseX - guiLeft, mouseY - guiTop);
             }
             i++;
@@ -57,12 +59,12 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
     }
 
     public <T> T getHoveredElement(int mouseX, int mouseY) {
-        if(current.isEmpty())
+        if (current.isEmpty())
             return null;
-        for(int i = 0; i < currentPages; i++) {
+        for (int i = 0; i < currentPages; i++) {
             int y = (gridStartY + gridHeight * i);
-            if(mouseX >= gridStartX && mouseY >= y && mouseX < (gridStartX + elementWidth) && mouseY < y + elementHeight) {
-                if(current.get(i) != null) {
+            if (mouseX >= gridStartX && mouseY >= y && mouseX < (gridStartX + elementWidth) && mouseY < y + elementHeight) {
+                if (current.get(i) != null) {
                     return (T) current.get(i);
                 }
             }
@@ -82,11 +84,11 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
     public void mouseMainClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseMainClicked(mouseX, mouseY, mouseButton);
         T e = getHoveredElement(mouseX - guiLeft, mouseY - guiTop);
-        if(e != null) {
+        if (e != null) {
             onElementClicked(e, mouseButton);
         }
-        if(pages > 1 && labelButton.isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop)) {
-            if(page != labelButton.hoveredPage) {
+        if (pages > 1 && labelButton.isMouseHovered(mc, mouseX - guiLeft, mouseY - guiTop)) {
+            if (page != labelButton.hoveredPage) {
                 page = Math.max(labelButton.hoveredPage, 1);
                 refreshCurrentPage();
             }
@@ -103,7 +105,7 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
     public void mouseScroll(int mouseX, int mouseY, int scroll) throws IOException {
         super.mouseScroll(mouseX, mouseY, scroll);
 
-        if(scroll == -1 && page < pages) {
+        if (scroll == -1 && page < pages) {
             page++;
             refreshCurrentPage();
         } else if (scroll == 1 && page > 1) {
@@ -120,7 +122,7 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
         this.elements = elements;
         pages = (int) Math.ceil(elements.size() / (double) gridPerPage);
         sortGrids(sortType);
-        if(!init) {
+        if (!init) {
             refreshCurrentPage();
             init = true;
         } else {
@@ -153,7 +155,7 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
     }
 
     protected void refreshCurrentPageInternal() {
-        if(elements.size() == 0)
+        if (elements.size() == 0)
             return;
 
         current.clear();
@@ -161,7 +163,7 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
         int b = Math.min(elements.size(), page * gridPerPage);
         currentPages = b - a;
 
-        for(int i = a; i < b; i++) {
+        for (int i = a; i < b; i++) {
             current.add(elements.get(i));
         }
     }
@@ -175,13 +177,13 @@ public abstract class GuiTabPages<T> extends GuiTabCore {
         ID(FluxTranslate.SORTING_ID),
         NAME(FluxTranslate.SORTING_NAME);
 
-        private Translation name;
+        private final Translation name;
 
         SortType(Translation name) {
             this.name = name;
         }
 
-        public String getTranslatedName(){
+        public String getTranslatedName() {
             return name.t();
         }
 

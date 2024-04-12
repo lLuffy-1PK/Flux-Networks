@@ -1,8 +1,5 @@
 package sonar.fluxnetworks.common.item;
 
-import sonar.fluxnetworks.FluxNetworks;
-import sonar.fluxnetworks.api.network.INetworkConnector;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -11,6 +8,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.FluxNetworks;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.network.INetworkConnector;
 
 public class ItemAdminConfigurator extends ItemConfigurator {
 
@@ -31,7 +31,7 @@ public class ItemAdminConfigurator extends ItemConfigurator {
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 
-    private static AdminConnector connector = new AdminConnector();
+    private static final AdminConnector connector = new AdminConnector();
 
     public static INetworkConnector getAdminConnector() {
         return connector;

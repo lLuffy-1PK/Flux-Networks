@@ -1,9 +1,6 @@
 package sonar.fluxnetworks.common.block;
 
 import com.google.common.collect.Lists;
-import sonar.fluxnetworks.common.tileentity.TileFluxConnector;
-import sonar.fluxnetworks.common.tileentity.TileFluxCore;
-import sonar.fluxnetworks.common.core.FluxUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -12,6 +9,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import sonar.fluxnetworks.common.core.FluxUtils;
+import sonar.fluxnetworks.common.tileentity.TileFluxConnector;
+import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 
 import java.util.ArrayList;
 

@@ -57,17 +57,17 @@ public class Coord4D {
         return "X: " + x + " Y: " + y + " Z: " + z + " Dim: " + dimension;
     }
 
-    public BlockPos getPos(){
-        return new BlockPos(x,y,z);
+    public BlockPos getPos() {
+        return new BlockPos(x, y, z);
     }
 
-    public int getDimension(){
+    public int getDimension() {
         return dimension;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Coord4D)) {
+        if (!(obj instanceof Coord4D)) {
             return false;
         }
         Coord4D c = (Coord4D) obj;

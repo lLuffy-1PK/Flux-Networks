@@ -1,9 +1,9 @@
 package sonar.fluxnetworks.common.registry;
 
-import sonar.fluxnetworks.FluxNetworks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+import sonar.fluxnetworks.FluxNetworks;
 
 public class RegistrySounds {
 

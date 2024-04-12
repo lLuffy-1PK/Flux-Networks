@@ -17,7 +17,7 @@ public class OCDriver extends DriverSidedTileEntity {
     @Override
     public ManagedEnvironment createEnvironment(World world, BlockPos blockPos, EnumFacing enumFacing) {
         TileEntity tileEntity = world.getTileEntity(blockPos);
-        if(tileEntity instanceof IOCPeripheral) {
+        if (tileEntity instanceof IOCPeripheral) {
             return new OCEnvironment((IOCPeripheral) tileEntity);
         }
         return null;

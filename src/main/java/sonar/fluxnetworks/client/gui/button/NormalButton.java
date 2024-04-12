@@ -1,7 +1,7 @@
 package sonar.fluxnetworks.client.gui.button;
 
-import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
 import net.minecraft.client.Minecraft;
+import sonar.fluxnetworks.client.gui.basic.GuiButtonCore;
 
 /**
  * A clickable button
@@ -23,7 +23,7 @@ public class NormalButton extends GuiButtonCore {
         int g = this.color >> 8 & 0xff;
         int b = this.color & 0xff;
 
-        if(clickable) {
+        if (clickable) {
             if (hovered)
                 color = this.color;
             else

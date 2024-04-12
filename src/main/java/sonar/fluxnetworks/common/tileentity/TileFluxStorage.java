@@ -85,7 +85,9 @@ public class TileFluxStorage extends TileFluxCore implements IFluxStorage, IBigP
         }
     }
 
-    /** on server side **/
+    /**
+     * on server side
+     **/
     private void sendPacketIfNeeded() {
         if (needSyncEnergy) {
             if ((world.getWorldTime() & 3) == 0) {
@@ -130,13 +132,13 @@ public class TileFluxStorage extends TileFluxCore implements IFluxStorage, IBigP
 
     @Override
     @Optional.Method(modid = "theoneprobe")
-    public long getStoredPower(){
+    public long getStoredPower() {
         return getTransferBuffer();
     }
 
     @Override
     @Optional.Method(modid = "theoneprobe")
-    public long getCapacity(){
+    public long getCapacity() {
         return getMaxTransferLimit();
     }
 
@@ -147,7 +149,7 @@ public class TileFluxStorage extends TileFluxCore implements IFluxStorage, IBigP
 
     @Override
     public Object[] invokeMethods(String method, Arguments arguments) {
-        if(method.equals("getFluxInfo")) {
+        if (method.equals("getFluxInfo")) {
             Map<Object, Object> map = new HashMap<>();
             map.put("customName", customName);
             map.put("priority", priority);

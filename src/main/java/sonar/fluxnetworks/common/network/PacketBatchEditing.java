@@ -1,16 +1,5 @@
 package sonar.fluxnetworks.common.network;
 
-import sonar.fluxnetworks.FluxConfig;
-import sonar.fluxnetworks.api.utils.Coord4D;
-import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
-import sonar.fluxnetworks.api.network.FluxLogicType;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.common.core.FluxUtils;
-import sonar.fluxnetworks.common.data.FluxChunkManager;
-import sonar.fluxnetworks.common.handler.PacketHandler;
-import sonar.fluxnetworks.common.item.ItemFluxConnector;
-import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,6 +9,17 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.FluxConfig;
+import sonar.fluxnetworks.api.gui.EnumFeedbackInfo;
+import sonar.fluxnetworks.api.network.FluxLogicType;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.utils.Coord4D;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
+import sonar.fluxnetworks.common.core.FluxUtils;
+import sonar.fluxnetworks.common.data.FluxChunkManager;
+import sonar.fluxnetworks.common.handler.PacketHandler;
+import sonar.fluxnetworks.common.item.ItemFluxConnector;
+import sonar.fluxnetworks.common.tileentity.TileFluxCore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,10 @@ public class PacketBatchEditing implements IMessageHandler<PacketBatchEditing.Ba
     @Override
     public IMessage onMessage(BatchEditingMessage message, MessageContext ctx) {
         EntityPlayer player = PacketHandler.getPlayer(ctx);
-        if(player != null) {
+        if (player != null) {
             IFluxNetwork network = FluxNetworkCache.instance.getNetwork(message.networkID);
-            if(!network.isInvalid()) {
-                if(network.getMemberPermission(player).canEdit()) {
+            if (!network.isInvalid()) {
+                if (network.getMemberPermission(player).canEdit()) {
                     boolean editName = message.editions[0];
                     boolean editPriority = message.editions[1];
                     boolean editLimit = message.editions[2];
@@ -52,50 +52,50 @@ public class PacketBatchEditing implements IMessageHandler<PacketBatchEditing.Ba
                     AtomicBoolean reject = new AtomicBoolean(false);
                     PacketHandler.handlePacket(() -> {
                         message.coord4DS.forEach(c -> onlineConnectors.stream().filter(f -> f.getCoords().equals(c)).findFirst().ifPresent(f -> {
-                        if(disconnect) {
-                            FluxUtils.removeConnection(f, false);
-                            f.disconnect(network);
-                        } else {
-                            if(editName) {
-                                f.customName = name;
-                            }
-                            if(editPriority) {
-                                f.priority = priority;
-                            }
-                            if(editLimit) {
-                                f.limit = Math.min(limit, f.getMaxTransferLimit());
-                            }
-                            if(editSurge) {
-                                f.surgeMode = surge;
-                            }
-                            if(editUnlimited) {
-                                f.disableLimit = unlimited;
-                            }
-                            if(editChunkLoad) {
-                                if (FluxConfig.enableChunkLoading) {
-                                    if (load) {
-                                        if(f.getConnectionType().isStorage()) {
-                                            reject.set(true);
-                                            return;
-                                        }
-                                        if(!f.chunkLoading) {
-                                            f.chunkLoading = FluxChunkManager.forceChunk(f.getWorld(), new ChunkPos(f.getPos()));
-                                            if(!f.chunkLoading) {
+                            if (disconnect) {
+                                FluxUtils.removeConnection(f, false);
+                                f.disconnect(network);
+                            } else {
+                                if (editName) {
+                                    f.customName = name;
+                                }
+                                if (editPriority) {
+                                    f.priority = priority;
+                                }
+                                if (editLimit) {
+                                    f.limit = Math.min(limit, f.getMaxTransferLimit());
+                                }
+                                if (editSurge) {
+                                    f.surgeMode = surge;
+                                }
+                                if (editUnlimited) {
+                                    f.disableLimit = unlimited;
+                                }
+                                if (editChunkLoad) {
+                                    if (FluxConfig.enableChunkLoading) {
+                                        if (load) {
+                                            if (f.getConnectionType().isStorage()) {
                                                 reject.set(true);
+                                                return;
                                             }
+                                            if (!f.chunkLoading) {
+                                                f.chunkLoading = FluxChunkManager.forceChunk(f.getWorld(), new ChunkPos(f.getPos()));
+                                                if (!f.chunkLoading) {
+                                                    reject.set(true);
+                                                }
+                                            }
+                                        } else {
+                                            FluxChunkManager.releaseChunk(f.getWorld(), new ChunkPos(f.getPos()));
+                                            f.chunkLoading = false;
                                         }
                                     } else {
-                                        FluxChunkManager.releaseChunk(f.getWorld(), new ChunkPos(f.getPos()));
                                         f.chunkLoading = false;
                                     }
-                                } else {
-                                    f.chunkLoading = false;
                                 }
+                                f.sendPackets();
                             }
-                            f.sendPackets();
-                        }
                         }));
-                        if(reject.get()) {
+                        if (reject.get()) {
                             PacketHandler.network.sendTo(new PacketFeedback.FeedbackMessage(EnumFeedbackInfo.REJECT_SOME), (EntityPlayerMP) player);
                         }
                     }, ctx.netHandler);
@@ -115,7 +115,8 @@ public class PacketBatchEditing implements IMessageHandler<PacketBatchEditing.Ba
         public NBTTagCompound tag;
         public boolean[] editions = new boolean[7];
 
-        public BatchEditingMessage() {}
+        public BatchEditingMessage() {
+        }
 
         public BatchEditingMessage(int networkID, List<Coord4D> coord4DS, NBTTagCompound tag, boolean[] editions) {
             this.networkID = networkID;
@@ -127,12 +128,12 @@ public class PacketBatchEditing implements IMessageHandler<PacketBatchEditing.Ba
         @Override
         public void fromBytes(ByteBuf buf) {
             networkID = buf.readInt();
-            for(int i = 0; i < 7; i++) {
+            for (int i = 0; i < 7; i++) {
                 editions[i] = buf.readBoolean();
             }
             tag = ByteBufUtils.readTag(buf);
             int size = buf.readInt();
-            for(int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 coord4DS.add(new Coord4D(buf));
             }
         }
@@ -140,7 +141,7 @@ public class PacketBatchEditing implements IMessageHandler<PacketBatchEditing.Ba
         @Override
         public void toBytes(ByteBuf buf) {
             buf.writeInt(networkID);
-            for(Boolean b : editions) {
+            for (Boolean b : editions) {
                 buf.writeBoolean(b);
             }
             ByteBufUtils.writeTag(buf, tag);

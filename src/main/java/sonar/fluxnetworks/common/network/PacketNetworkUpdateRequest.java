@@ -1,13 +1,13 @@
 package sonar.fluxnetworks.common.network;
 
 import com.google.common.collect.Lists;
-import sonar.fluxnetworks.api.network.IFluxNetwork;
-import sonar.fluxnetworks.common.connection.FluxNetworkCache;
-import sonar.fluxnetworks.api.utils.NBTType;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import sonar.fluxnetworks.api.network.IFluxNetwork;
+import sonar.fluxnetworks.api.utils.NBTType;
+import sonar.fluxnetworks.common.connection.FluxNetworkCache;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ public class PacketNetworkUpdateRequest implements IMessageHandler<PacketNetwork
     public IMessage onMessage(UpdateRequestMessage message, MessageContext ctx) {
         List<IFluxNetwork> networks = Lists.newArrayList();
 
-        for(Integer i : message.networks){
+        for (Integer i : message.networks) {
             IFluxNetwork network = FluxNetworkCache.instance.getNetwork(i);
-            if(!network.isInvalid()) {
+            if (!network.isInvalid()) {
                 networks.add(network);
             }
         }
-        if(!networks.isEmpty()) {
+        if (!networks.isEmpty()) {
             return new PacketNetworkUpdate.NetworkUpdateMessage(Lists.newArrayList(networks), message.type);
         }
         return null;
@@ -34,7 +34,8 @@ public class PacketNetworkUpdateRequest implements IMessageHandler<PacketNetwork
         public List<Integer> networks = Lists.newArrayList();
         public NBTType type;
 
-        public UpdateRequestMessage() {}
+        public UpdateRequestMessage() {
+        }
 
         public UpdateRequestMessage(int networkID, NBTType type) {
             this.networks.add(networkID);
@@ -49,7 +50,7 @@ public class PacketNetworkUpdateRequest implements IMessageHandler<PacketNetwork
         @Override
         public void fromBytes(ByteBuf buf) {
             int size = buf.readInt();
-            for(int i = 0; i < size; i++){
+            for (int i = 0; i < size; i++) {
                 networks.add(buf.readInt());
             }
             type = NBTType.values()[buf.readInt()];

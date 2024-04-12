@@ -1,12 +1,9 @@
 package sonar.fluxnetworks.api.network;
 
-import com.google.common.collect.Lists;
 import sonar.fluxnetworks.api.tiles.*;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Set;
 
 /**
