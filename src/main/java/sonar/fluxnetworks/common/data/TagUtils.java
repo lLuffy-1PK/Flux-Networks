@@ -76,10 +76,13 @@ public class TagUtils {
     public static List<ChunkPosDTO> chunkPosListOrNull(NBTTagCompound tag, String key) {
         List<ChunkPosDTO> dtoList = new ArrayList<>();
         if (tag.hasKey(key)) {
-            NBTTagList nbtTagList = tag.getTagList(key, 10);
-            for (int i = 0; i < nbtTagList.tagCount(); i++) {
-                dtoList.add(ChunkPosDTO.fromNBT(nbtTagList.getCompoundTagAt(i)));
-            }
+            NBTTagCompound chunksTag = tag.getCompoundTag(key);
+            chunksTag.getKeySet().forEach(dim -> {
+                NBTTagList nbtTagList = chunksTag.getTagList(dim, 10);
+                for (int i = 0; i < nbtTagList.tagCount(); i++) {
+                    dtoList.add(ChunkPosDTO.fromNBT(nbtTagList.getCompoundTagAt(i), Integer.parseInt(dim)));
+                }
+            });
         }
         return dtoList.isEmpty() ? null : dtoList;
     }
