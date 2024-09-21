@@ -32,7 +32,7 @@ import static sonar.fluxnetworks.common.data.TagConstants.TYPE;
 
 public class FluxLiteConnector implements IFluxConnector {
 
-    public int networkID;
+    public long networkID;
     public int priority;
     public UUID playerUUID;
     public ConnectionType connectionType;
@@ -99,7 +99,7 @@ public class FluxLiteConnector implements IFluxConnector {
     public static NBTTagCompound writeCustomNBT(IFluxConnector tile, NBTTagCompound tag) {
         tile.getCoords().write(tag);
         tag.setInteger(TYPE, tile.getConnectionType().ordinal());
-        tag.setInteger(N_ID, tile.getNetworkID());
+        tag.setLong(N_ID, tile.getNetworkID());
         tag.setInteger(PRIORITY, tile.getRawPriority());
         tag.setInteger(FOLDER_ID, tile.getFolderID());
         tag.setLong(LIMIT, tile.getRawLimit());
@@ -118,7 +118,7 @@ public class FluxLiteConnector implements IFluxConnector {
     public NBTTagCompound writeCustomNBT(NBTTagCompound tag, NBTType type) {
         coord4D.write(tag);
         tag.setInteger(TYPE, connectionType.ordinal());
-        tag.setInteger(N_ID, networkID);
+        tag.setLong(N_ID, networkID);
         tag.setInteger(PRIORITY, priority);
         tag.setInteger(FOLDER_ID, folderID);
         tag.setLong(LIMIT, limit);
@@ -137,7 +137,7 @@ public class FluxLiteConnector implements IFluxConnector {
     public void readCustomNBT(NBTTagCompound tag, NBTType type) {
         coord4D = new Coord4D(tag);
         connectionType = ConnectionType.values()[tag.getInteger(TYPE)];
-        networkID = tag.getInteger(N_ID);
+        networkID = tag.getLong(N_ID);
         priority = tag.getInteger(PRIORITY);
         folderID = tag.getInteger(FOLDER_ID);
         limit = tag.getLong(LIMIT);
@@ -152,7 +152,7 @@ public class FluxLiteConnector implements IFluxConnector {
     }
 
     @Override
-    public int getNetworkID() {
+    public long getNetworkID() {
         return networkID;
     }
 
