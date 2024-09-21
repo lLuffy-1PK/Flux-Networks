@@ -44,7 +44,7 @@ public class FluxNetworkCodec implements Codec<FluxNetworkDTO>{
         while (reader.readBsonType() != BsonType.END_OF_DOCUMENT) {
             String name = reader.readName();
             if (name.equals(NETWORK_ID)) {
-                fluxNetworkDTO.setNetworkID(reader.readInt32());
+                fluxNetworkDTO.setNetworkID(reader.readInt64());
             } else if (name.equals(NETWORK_NAME)) {
                 fluxNetworkDTO.setNetworkName(reader.readString());
             } else if (name.equals(OWNER_UUID)) {
@@ -84,7 +84,7 @@ public class FluxNetworkCodec implements Codec<FluxNetworkDTO>{
     @Override
     public void encode(BsonWriter writer, FluxNetworkDTO value, EncoderContext encoderContext) {
         writer.writeStartDocument();
-        writer.writeInt32(NETWORK_ID, value.getNetworkID());
+        writer.writeInt64(NETWORK_ID, value.getNetworkID());
         writer.writeString(NETWORK_NAME, value.getNetworkName());
         writer.writeName(OWNER_UUID);
         uuidCodec.encode(writer, value.getOwnerUUID(), encoderContext);

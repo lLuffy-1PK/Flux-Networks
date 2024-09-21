@@ -78,10 +78,10 @@ public class FluxNetworkData extends WorldSavedData {
     public static String OLD_NETWORK_COLOR = "colour";
     public static String OLD_NETWORK_ACCESS = "access";
 
-    public Map<Integer, IFluxNetwork> networks = new HashMap<>();
+    public Map<Long, IFluxNetwork> networks = new HashMap<>();
     public Map<Integer, List<ChunkPos>> loadedChunks = new HashMap<>(); // Forced Chunks
 
-    public int uniqueID = 1;
+    public long uniqueID = 1;
 
     public FluxNetworkData(String name) {
         super(name);
@@ -146,18 +146,18 @@ public class FluxNetworkData extends WorldSavedData {
 
     public void addNetwork(IFluxNetwork network) {
         networks.putIfAbsent(network.getNetworkID(), network);
-        PacketHandler.network.sendToAll(new PacketNetworkUpdate.NetworkUpdateMessage(Lists.newArrayList(network), NBTType.NETWORK_GENERAL));
+        PacketHandler.network.sendToAll(new PacketNetworkUpdate.NetworkUpdateMessage(network, NBTType.NETWORK_GENERAL));
     }
 
     public void removeNetwork(IFluxNetwork network) {
-        PacketHandler.network.sendToAll(new PacketNetworkUpdate.NetworkUpdateMessage(Lists.newArrayList(network), NBTType.NETWORK_CLEAR));
+        PacketHandler.network.sendToAll(new PacketNetworkUpdate.NetworkUpdateMessage(network, NBTType.NETWORK_CLEAR));
         network.onRemoved();
         networks.remove(network.getNetworkID());
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
-        uniqueID = nbt.getInteger(UNIQUE_ID);
+        uniqueID = nbt.getLong(UNIQUE_ID);
         if (nbt.hasKey(NETWORKS)) {
             NBTTagList list = nbt.getTagList(NETWORKS, Constants.NBT.TAG_COMPOUND);
             for (int i = 0; i < list.tagCount(); i++) {
@@ -177,7 +177,7 @@ public class FluxNetworkData extends WorldSavedData {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setInteger(UNIQUE_ID, uniqueID);
+        compound.setLong(UNIQUE_ID, uniqueID);
 
         NBTTagList list = new NBTTagList();
         for (IFluxNetwork network : FluxNetworkCache.instance.getAllNetworks()) {
@@ -321,7 +321,7 @@ public class FluxNetworkData extends WorldSavedData {
     }
 
     private static void readOldData(FluxNetworkBase network, NBTTagCompound nbt) {
-        network.network_id.setValue(nbt.getInteger(FluxNetworkData.OLD_NETWORK_ID));
+        network.network_id.setValue(nbt.getLong(FluxNetworkData.OLD_NETWORK_ID));
         network.network_name.setValue(nbt.getString(FluxNetworkData.OLD_NETWORK_NAME));
         NBTTagCompound color = nbt.getCompoundTag(FluxNetworkData.OLD_NETWORK_COLOR);
         network.network_color.setValue(color.getInteger("red") << 16 | color.getInteger("green") << 8 | color.getInteger("blue"));

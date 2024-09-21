@@ -39,7 +39,7 @@ public class FluxConnectorCodec implements Codec <FluxConnectorDTO>{
             if (name.equals(TYPE)) {
                 connector.setType(reader.readInt32());
             } else if (name.equals(N_ID)) {
-                connector.setN_id(reader.readInt32());
+                connector.setN_id(reader.readInt64());
             } else if (name.equals(PRIORITY)) {
                 connector.setPriority(reader.readInt32());
             } else if (name.equals(FOLDER_ID)) {
@@ -89,7 +89,7 @@ public class FluxConnectorCodec implements Codec <FluxConnectorDTO>{
         writer.writeStartDocument();
 
         writer.writeInt32(TYPE, value.getType());
-        writer.writeInt32(N_ID, value.getN_id());
+        writer.writeInt64(N_ID, value.getN_id());
         writer.writeInt32(PRIORITY, value.getPriority());
         writer.writeInt32(FOLDER_ID, value.getFolder_id());
         writer.writeInt64(LIMIT, value.getLimit());

@@ -27,12 +27,12 @@ import static sonar.fluxnetworks.common.data.TagConstants.NETWORKS;
 import static sonar.fluxnetworks.common.data.TagConstants.UNIQUE_ID;
 
 public class FluxNetworkDataDTO {
-    private static FluxNetworkDataDTO EMPTY = new FluxNetworkDataDTO();
+    private static final FluxNetworkDataDTO EMPTY = new FluxNetworkDataDTO();
 
     List<FluxNetworkDTO> networks;
     List<ChunkPosDTO> loadedChunks;
-    Integer uniqueId;
     UUID serverID;
+    Long uniqueId;
 
     public FluxNetworkDataDTO() {}
 
@@ -42,7 +42,7 @@ public class FluxNetworkDataDTO {
 
     public static FluxNetworkDataDTO fromNBT(NBTTagCompound tag) {
         FluxNetworkDataDTO dto = new FluxNetworkDataDTO();
-        dto.uniqueId = TagUtils.intOrNull(tag, UNIQUE_ID);
+        dto.uniqueId = TagUtils.longOrNull(tag, UNIQUE_ID);
         dto.networks = TagUtils.fluxNetworkListOrNull(tag, NETWORKS);
         dto.loadedChunks = TagUtils.chunkPosListOrNull(tag, LOADED_CHUNKS);
         dto.serverID = MONGO_SERVER_ID;
@@ -51,7 +51,7 @@ public class FluxNetworkDataDTO {
 
     public NBTTagCompound toNBT() {
         NBTTagCompound tag = new NBTTagCompound();
-        tag.setInteger(UNIQUE_ID, uniqueId);
+        tag.setLong(UNIQUE_ID, uniqueId);
         TagUtils.fillNBT(tag, NETWORKS, networks);
         TagUtils.fillNBT(tag, LOADED_CHUNKS, loadedChunks);
         return tag;
@@ -69,8 +69,8 @@ public class FluxNetworkDataDTO {
         return data;
     }
 
-    public Map<Integer, IFluxNetwork> getNetworkMap() {
-        Map<Integer, IFluxNetwork> map = new HashMap<>();
+    public Map<Long, IFluxNetwork> getNetworkMap() {
+        Map<Long, IFluxNetwork> map = new HashMap<>();
         if (networks != null) {
             for (FluxNetworkDTO dto : networks) {
                 FluxNetworkServer fluxNetwork = new FluxNetworkServer(
@@ -126,11 +126,11 @@ public class FluxNetworkDataDTO {
         this.networks = networks;
     }
 
-    public Integer getUniqueId() {
+    public Long getUniqueId() {
         return uniqueId;
     }
 
-    public void setUniqueId(Integer uniqueId) {
+    public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
     }
 

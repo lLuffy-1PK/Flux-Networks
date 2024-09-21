@@ -31,7 +31,7 @@ public class FluxConnectorDTO extends NBTCompatibleDTO<FluxConnectorDTO> {
     private static final FluxConnectorDTO EMPTY = new FluxConnectorDTO();
 
     Integer type;
-    Integer n_id;
+    Long n_id;
     Integer priority;
     Integer folder_id;
     Long limit;
@@ -61,7 +61,7 @@ public class FluxConnectorDTO extends NBTCompatibleDTO<FluxConnectorDTO> {
     public static FluxConnectorDTO fromNBT(NBTTagCompound tag) {
         FluxConnectorDTO dto = new FluxConnectorDTO();
         dto.type = TagUtils.intOrNull(tag, TYPE);
-        dto.n_id = TagUtils.intOrNull(tag, N_ID);
+        dto.n_id = TagUtils.longOrNull(tag, N_ID);
         dto.priority = TagUtils.intOrNull(tag, PRIORITY);
         dto.folder_id = TagUtils.intOrNull(tag, FOLDER_ID);
         dto.limit = TagUtils.longOrNull(tag, LIMIT);
@@ -126,11 +126,11 @@ public class FluxConnectorDTO extends NBTCompatibleDTO<FluxConnectorDTO> {
         this.type = type;
     }
 
-    public Integer getN_id() {
+    public Long getN_id() {
         return n_id;
     }
 
-    public void setN_id(Integer n_id) {
+    public void setN_id(Long n_id) {
         this.n_id = n_id;
     }
 

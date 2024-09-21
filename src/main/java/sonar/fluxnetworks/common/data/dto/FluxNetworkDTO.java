@@ -21,7 +21,7 @@ import static sonar.fluxnetworks.common.data.TagConstants.WIRELESS_MODE;
 public class FluxNetworkDTO extends NBTCompatibleDTO<FluxNetworkDTO> {
     private static final FluxNetworkDTO EMPTY = new FluxNetworkDTO();
 
-    Integer networkID;
+    Long networkID;
     String networkName;
     UUID ownerUUID;
     Integer networkSecurity;
@@ -34,7 +34,7 @@ public class FluxNetworkDTO extends NBTCompatibleDTO<FluxNetworkDTO> {
 
     public static FluxNetworkDTO fromNBT(NBTTagCompound tag) {
         FluxNetworkDTO dto = new FluxNetworkDTO();
-        dto.networkID = TagUtils.intOrNull(tag, NETWORK_ID);
+        dto.networkID = TagUtils.longOrNull(tag, NETWORK_ID);
         dto.networkName = TagUtils.stringOrNull(tag, NETWORK_NAME);
         dto.ownerUUID = TagUtils.uuidOrNull(tag, OWNER_UUID);
         dto.networkSecurity = TagUtils.intOrNull(tag, NETWORK_SECURITY);
@@ -66,11 +66,11 @@ public class FluxNetworkDTO extends NBTCompatibleDTO<FluxNetworkDTO> {
         return this.equals(EMPTY);
     }
 
-    public Integer getNetworkID() {
+    public Long getNetworkID() {
         return networkID;
     }
 
-    public void setNetworkID(Integer networkID) {
+    public void setNetworkID(Long networkID) {
         this.networkID = networkID;
     }
 

@@ -38,7 +38,7 @@ public class FluxNetworkDataCodec implements Codec<FluxNetworkDataDTO>{
         while (reader.readBsonType() != BsonType.END_OF_DOCUMENT) {
             String name = reader.readName();
             if (name.equals(UNIQUE_ID)) {
-                fluxNetworkDataDTO.setUniqueId(reader.readInt32());
+                fluxNetworkDataDTO.setUniqueId(reader.readInt64());
             } else if (name.equals(NETWORKS)) {
                 reader.readStartArray();
                 fluxNetworkDataDTO.setNetworks(new ArrayList<>());
@@ -69,7 +69,7 @@ public class FluxNetworkDataCodec implements Codec<FluxNetworkDataDTO>{
         writer.writeName(INDEX_FIELD);
         uuidCodec.encode(writer, value.getServerID(), encoderContext);
         if (value.getUniqueId() != null) {
-            writer.writeInt32(UNIQUE_ID, value.getUniqueId());
+            writer.writeInt64(UNIQUE_ID, value.getUniqueId());
         }
         if (value.getNetworks() != null && !value.getNetworks().isEmpty()) {
             writer.writeName(NETWORKS);
